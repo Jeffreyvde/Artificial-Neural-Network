@@ -43,6 +43,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Neural Network\Backpropogation\GradientDecentValue.cs" />
+    <Compile Include="Neural Network\Backpropogation\GradientDescent.cs" />
+    <Compile Include="Neural Network\Basics\Connection.cs" />
+    <Compile Include="Neural Network\Layer.cs" />
+    <Compile Include="Neural Network\NeuralNetwork.cs" />
+    <Compile Include="Neural Network\Basics\Neuron.cs" />
+    <Compile Include="Neural Network\Basics\Weight.cs" />
+    <Compile Include="Neural Network\Training\TrainingData.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
