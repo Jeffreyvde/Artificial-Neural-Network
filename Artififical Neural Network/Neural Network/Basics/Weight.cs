@@ -14,7 +14,7 @@ namespace NeuralNetwork
         /// </summary>
         /// <param name="layerIndex"></param>
         /// <param name="random"></param>
-        public Weight(int layerIndex, Random random, Neuron startNeuron, Neuron endNeuron)
+        public Weight(int layerIndex, Neuron startNeuron, Neuron endNeuron, Random random)
         {
             this.layerIndex = layerIndex;
 
