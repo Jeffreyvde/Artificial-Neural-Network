@@ -4,8 +4,7 @@ namespace NeuralNetwork
 {
     public class Neuron
     {
-        public readonly int layerIndex;
-        public readonly int layerRow;
+        public readonly int layerIndex, layerRow;
 
         public float activation;
 
@@ -26,7 +25,7 @@ namespace NeuralNetwork
         }
 
         /// <summary>
-        /// Cal;culate the activation of this neuron
+        /// Calculate the activation of this neuron
         /// </summary>
         /// <param name="sum"></param>
         public void CalculateActivation(float sum)
