@@ -6,14 +6,13 @@ namespace NeuralNetwork
     {
         public readonly int index;
 
-        public readonly Weight[,] weights;
+        public Weight[,] weights;
         public readonly Neuron[] neurons;
 
         public Layer(int index, int sizeNeurons)
         {
             this.index = index;
             neurons = new Neuron[sizeNeurons];
-
         }
 
         /// <summary>
@@ -35,11 +34,12 @@ namespace NeuralNetwork
         /// <param name="random">Random generator for optimilization</param>
         public void GenerateWeights(Neuron[] previousNeurons, Random random)
         {
+            weights = new Weight[neurons.Length, previousNeurons.Length];
             for (int i = 0; i < neurons.Length; i++)
             {
-                for (int j = 0; i < previousNeurons.Length; j++)
+                for (int j = 0; j < previousNeurons.Length; j++)
                 {
-                    weights[i, j] = new Weight(index, neurons[i], previousNeurons[i], random);
+                    weights[i, j] = new Weight(index, neurons[i], previousNeurons[j], random);
                 }
             }
         }

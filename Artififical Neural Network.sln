@@ -3,7 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.29215.179
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Artififical Neural Network", "Artififical Neural Network\Artififical Neural Network.csproj", "{590A53E3-FE61-446E-93BA-3866DF0319C8}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Artificial Neural Network", "Artififical Neural Network\Artificial Neural Network.csproj", "{590A53E3-FE61-446E-93BA-3866DF0319C8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Artificial Neural NetworkTests", "Artififical Neural NetworkTests\Artificial Neural NetworkTests.csproj", "{E197178C-4D47-48C5-B1FE-21671A33F643}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{590A53E3-FE61-446E-93BA-3866DF0319C8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{590A53E3-FE61-446E-93BA-3866DF0319C8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{590A53E3-FE61-446E-93BA-3866DF0319C8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E197178C-4D47-48C5-B1FE-21671A33F643}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E197178C-4D47-48C5-B1FE-21671A33F643}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E197178C-4D47-48C5-B1FE-21671A33F643}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E197178C-4D47-48C5-B1FE-21671A33F643}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

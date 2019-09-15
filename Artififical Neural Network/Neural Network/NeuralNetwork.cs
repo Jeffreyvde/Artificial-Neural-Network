@@ -20,7 +20,6 @@ namespace NeuralNetwork
 
             CreateNewLayer(0, layerSizes[0], random, null);
 
-
             for (int i = 1; i < layerSizes.Length; i++)
             {
                 CreateNewLayer(i, layerSizes[i], random, layers[i - 1].neurons);
