@@ -6,10 +6,10 @@ namespace NeuralNetwork
     {
         public readonly int layerIndex, layerRow;
 
-        public float activation;
+        public double activation;
 
-        public float bias;
-        public float weightedSum;
+        public double bias;
+        public double weightedSum;
 
         /// <summary>
         /// Constructor for Neuron class. That generates random bias between 0 and 1.
@@ -24,13 +24,5 @@ namespace NeuralNetwork
             bias = (float)random.NextDouble();
         }
 
-        /// <summary>
-        /// Calculate the activation of this neuron
-        /// </summary>
-        /// <param name="sum"></param>
-        public void CalculateActivation(float sum)
-        {
-
-        }
     }
 }
