@@ -1,4 +1,5 @@
 ﻿using System;
+using MathNet.Numerics.LinearAlgebra;
 
 namespace NeuralNetwork
 {
@@ -14,6 +15,11 @@ namespace NeuralNetwork
             this.index = index;
             neurons = new Neuron[sizeNeurons];
         }
+
+        private void Train(Neuron[] neurons)
+        {
+            Matrix<double> weigths = Converter.ConvertToMatrix(weights, );
+                }
 
         /// <summary>
         /// Generate an array of neurons

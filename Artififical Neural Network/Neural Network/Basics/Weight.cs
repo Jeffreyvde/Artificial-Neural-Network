@@ -5,9 +5,9 @@ namespace NeuralNetwork
     public class Weight
     {
         public readonly int layerIndex;
-        public float weight;
+        public double weight;
 
-        public Connection connection;
+        public Connection connections;
 
         /// <summary>
         /// Constructor for Weight class. That generates random weight between 0 and 1.
@@ -19,7 +19,7 @@ namespace NeuralNetwork
             this.layerIndex = layerIndex;
 
             weight = (float)random.NextDouble();
-            connection = new Connection(startNeuron, endNeuron);
+            connections = new Connection(startNeuron, endNeuron);
         }
     }
 }
