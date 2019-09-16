@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using NeuralNetworks;
 
 namespace Artififical_Neural_Network
 {
@@ -10,6 +8,12 @@ namespace Artififical_Neural_Network
     {
         static void Main(string[] args)
         {
+            NeuralNetwork network = new NeuralNetwork(3, 3, 3);
+            TrainingData trainingData = new TrainingData(new double[]{ 1, 0, 1 }, 0);
+
+            network.Train(trainingData);
+
+            Console.Read();
         }
     }
 }
