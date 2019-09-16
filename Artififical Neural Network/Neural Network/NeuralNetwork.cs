@@ -36,7 +36,7 @@ namespace NeuralNetworks
 
             for (int i = 1; i < layers.Length; i++)
             {
-                layers[1].Train(layers[i - 1].neurons);
+                layers[i].Train(layers[i - 1].neurons);
             }
         }
 
