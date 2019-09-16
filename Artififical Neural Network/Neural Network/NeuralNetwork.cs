@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace NeuralNetwork
+namespace NeuralNetworks
 {
     public class NeuralNetwork
     {
@@ -25,6 +25,19 @@ namespace NeuralNetwork
                 CreateNewLayer(i, layerSizes[i], random, layers[i - 1].neurons);
             }
 
+        }
+
+        /// <summary>
+        /// Train the neural network
+        /// </summary>
+        public void Train(TrainingData trainingData)
+        {
+            layers[0].AssingNeurons(trainingData.inputData);
+
+            for (int i = 1; i < layers.Length; i++)
+            {
+                layers[1].Train(layers[i - 1].neurons);
+            }
         }
 
         /// <summary>

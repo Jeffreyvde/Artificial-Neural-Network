@@ -1,7 +1,7 @@
 ﻿using MathNet.Numerics.LinearAlgebra;
 using MathNet.Numerics.LinearAlgebra.Double;
 
-namespace NeuralNetwork
+namespace NeuralNetworks
 {
     public static class Converter
     {
@@ -34,7 +34,7 @@ namespace NeuralNetwork
         /// <returns></returns>
         public static Vector<double> ConvertToVector(Neuron[] neurons, bool activationVector)
         {
-            Vector<double> values = Vector<double>.Build.Dense(10);
+            Vector<double> values = Vector<double>.Build.Dense(neurons.Length);
             for (int i = 0; i < neurons.Length; i++)
             {
                 values.Add(activationVector ? neurons[i].activation : neurons[i].bias);

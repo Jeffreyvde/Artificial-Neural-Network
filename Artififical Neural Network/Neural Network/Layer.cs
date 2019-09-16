@@ -1,7 +1,7 @@
 ﻿using System;
 using MathNet.Numerics.LinearAlgebra;
 
-namespace NeuralNetwork
+namespace NeuralNetworks
 {
     public class Layer
     {
@@ -20,7 +20,7 @@ namespace NeuralNetwork
         /// Train this layer
         /// </summary>
         /// <param name="previousNeurons"></param>
-        private void Train(Neuron[] previousNeurons)
+        public void Train(Neuron[] previousNeurons)
         {
             Matrix<double> weigthMatrix = Converter.ConvertToMatrix(weights, neurons.Length, previousNeurons.Length);
             Vector<double> activations = Converter.ConvertToVector(previousNeurons, true);
@@ -53,6 +53,21 @@ namespace NeuralNetwork
             for (int i = 0; i < neurons.Length; i++)
             {
                 neurons[i] = new Neuron(index, i, random);
+            }
+        }
+
+        /// <summary>
+        /// Assing an array of neurons with input data
+        /// </summary>
+        /// <param name="random">Random generator for optimilization</param>
+        public void AssingNeurons(double[] input)
+        {
+
+            if (input.Length != neurons.Length) throw new Exception("Input not equal to neurons lenght");
+
+            for (int i = 0; i < neurons.Length; i++)
+            {
+                neurons[i] = new Neuron(index, i, input[i]);
             }
         }
 

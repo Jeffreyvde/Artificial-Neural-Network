@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace NeuralNetwork
+namespace NeuralNetworks
 {
     public class Neuron
     {
@@ -22,6 +22,19 @@ namespace NeuralNetwork
             this.layerRow = layerRow;
 
             bias = (float)random.NextDouble();
+        }
+
+        /// <summary>
+        /// Constructor for Neuron class. That already has an activation.
+        /// </summary>
+        /// <param name="layerIndex"></param>
+        /// <param name="random"></param>
+        public Neuron(int layerIndex, int layerRow, double activation)
+        {
+            this.layerIndex = layerIndex;
+            this.layerRow = layerRow;
+
+            this.activation = activation;
         }
 
     }

@@ -1,8 +1,14 @@
-﻿namespace NeuralNetwork
+﻿namespace NeuralNetworks
 {
     public class TrainingData
     {
-        public float[] inputData;
+        public double[] inputData;
         public int correctOutputNeuron;
+
+        public TrainingData(double[] input, int correctOuput)
+        {
+            inputData = input;
+            correctOutputNeuron = correctOuput;
+        }
     }
 }
