@@ -14,7 +14,6 @@ namespace NeuralNetworks
         //Backpropogation
         public double derivativeActivation;
         public double derivativeCost;
-        public double derivativeBias;
 
         /// <summary>
         /// Constructor for Neuron class. That generates random bias between -1 and 1.
@@ -69,17 +68,17 @@ namespace NeuralNetworks
         /// Backpropogate this output neuron
         /// </summary>
         /// <param name="traningData"></param>
-        public void BackPropogate(int traningData)
+        public double BackPropogate(int traningData)
         {
             derivativeCost = 2 * (activation - traningData);
-            derivativeBias = derivativeActivation * derivativeCost;
+            return derivativeActivation * derivativeCost;
         }
 
         /// <summary>
         /// Backpropogate this hidden neuron
         /// </summary>
         /// <param name="nextLayer"></param>
-        public void BackPropogate(Layer nextLayer)
+        public double BackPropogate(Layer nextLayer)
         {
             for (int i = 0; i < nextLayer.neurons.Length; i++)
             {
@@ -87,7 +86,7 @@ namespace NeuralNetworks
                 derivativeCost += nextLayer.GetWeight(i, layerRow).weight * neuron.derivativeActivation * neuron.derivativeCost;
             }
             derivativeCost /= nextLayer.neurons.Length;
-            derivativeBias = derivativeActivation * derivativeCost;
+            return derivativeActivation * derivativeCost;
         }
     }
 }

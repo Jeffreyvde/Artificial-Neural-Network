@@ -17,8 +17,13 @@ namespace NeuralNetworks
         {
             this.layerIndex = layerIndex;
 
-            weight = Randomizer.GetRandomNumber(-1,1);
+            weight = Randomizer.GetRandomNumber(-1, 1);
             connections = new Connection(startNeuron, endNeuron);
+        }
+
+        public double BackPropogate()
+        {
+            return connections.startNeuron.activation * connections.endNeuron.derivativeActivation * connections.endNeuron.derivativeCost;
         }
     }
 }
