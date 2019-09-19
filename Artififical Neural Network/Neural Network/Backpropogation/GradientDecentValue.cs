@@ -2,10 +2,19 @@
 {
     public class GradientDecentValue
     {
-        public readonly int layerIndex, layerRow;
+        public double stepValue;
 
-        public float stepValue;
+        public IBackpropogatable changedObject;
 
-        public bool isWeightChange;
+        public GradientDecentValue(double stepValue, IBackpropogatable changedObject)
+        {
+            this.stepValue = stepValue;
+            this.changedObject = changedObject;
+        }
+
+        public void Apply()
+        {
+            changedObject.ApplyGradientDecentStep(stepValue);
+        }
     }
 }
