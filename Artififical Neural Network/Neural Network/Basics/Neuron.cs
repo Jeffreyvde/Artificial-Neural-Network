@@ -14,6 +14,7 @@ namespace NeuralNetworks
         //Backpropogation
         public double derivativeActivation;
         public double derivativeCost;
+        public double derivativeBias;
 
         /// <summary>
         /// Constructor for Neuron class. That generates random bias between -1 and 1.
@@ -57,15 +58,36 @@ namespace NeuralNetworks
         /// Calculate the cost with training data
         /// </summary>
         /// <param name="trainingData">value from training data</param>
-        /// <param name="derivative">Do you want the derivative value</param>
+        /// <param name="backpropogate">Do you want the derivative value</param>
         /// <returns></returns>
-        public double CalculateCost(double trainingData, bool derivative = false)
+        public double CalculateCost(double trainingData)
         {
-            if (!derivative)
-                return Math.Pow(activation - trainingData, 2);
+            return Math.Pow(activation - trainingData, 2);
+        }
 
-            derivativeCost = 2 * (activation - trainingData);
-            return derivativeCost;
+        /// <summary>
+        /// Backpropogate this output neuron
+        /// </summary>
+        /// <param name="traningData"></param>
+        public void BackPropogate(int traningData)
+        {
+            derivativeCost = 2 * (activation - traningData);
+            derivativeBias = derivativeActivation * derivativeCost;
+        }
+
+        /// <summary>
+        /// Backpropogate this hidden neuron
+        /// </summary>
+        /// <param name="nextLayer"></param>
+        public void BackPropogate(Layer nextLayer)
+        {
+            for (int i = 0; i < nextLayer.neurons.Length; i++)
+            {
+                Neuron neuron = nextLayer.neurons[i];
+                derivativeCost += nextLayer.GetWeight(i, layerRow).weight * neuron.derivativeActivation * neuron.derivativeCost;
+            }
+            derivativeCost /= nextLayer.neurons.Length;
+            derivativeBias = derivativeActivation * derivativeCost;
         }
     }
 }

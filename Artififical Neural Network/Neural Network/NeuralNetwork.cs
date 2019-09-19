@@ -1,10 +1,12 @@
-﻿namespace NeuralNetworks
+﻿using System;
+using System.Linq;
+
+namespace NeuralNetworks
 {
     public class NeuralNetwork
     {
         public Layer[] layers;
-        private IActivation activation;
-
+        private readonly IActivation activation;
 
         /// <summary>
         /// Create a neural network structure. The size include the input and output layers.
@@ -24,7 +26,6 @@
             {
                 CreateNewLayer(i, layerSizes[i], layers[i - 1].neurons);
             }
-
         }
 
         /// <summary>
@@ -32,11 +33,21 @@
         /// </summary>
         public void Train(TrainingData trainingData)
         {
-            layers[0].AssingNeurons(trainingData.inputData);
+            SetInputLayer(trainingData.inputData);
 
             for (int i = 1; i < layers.Length; i++)
             {
                 layers[i].Train(layers[i - 1].neurons);
+            }
+        }
+
+        public void Backpropogate(TrainingData trainingData)
+        {
+            layers[layers.Length - 1].BackPropogate(trainingData.correctOutputNeuron);
+
+            for (int i = layers.Length - 1; i > 0; i--)
+            {
+
             }
         }
 
@@ -51,9 +62,24 @@
         {
             Layer layer = new Layer(index, size, activation);
             layers[index] = layer;
-            layer.GenerateNeurons();
             if (previousNeurons != null)
                 layer.GenerateWeights(previousNeurons);
+        }
+
+        /// <summary>
+        /// Initialize the input layer
+        /// </summary>
+        /// <param name="input"></param>
+        private void SetInputLayer(double[] input)
+        {
+            Layer layer = layers[0];
+
+            if (input.Length != layer.neurons.Length) throw new Exception("Input not equal to neurons lenght");
+
+            for (int i = 0; i < layer.neurons.Length; i++)
+            {
+                layer.neurons[i] = new Neuron(0, i, input[i]);
+            }
         }
     }
 }
