@@ -41,13 +41,17 @@ namespace NeuralNetworks
             }
         }
 
+        /// <summary>
+        /// Backpropogate neural network
+        /// </summary>
+        /// <param name="trainingData"></param>
         public void Backpropogate(TrainingData trainingData)
         {
             layers[layers.Length - 1].BackPropogate(trainingData.correctOutputNeuron);
 
-            for (int i = layers.Length - 1; i > 0; i--)
+            for (int i = layers.Length - 2; i > 0; i--)
             {
-
+                layers[i].BackPropogate(layers[i + 1]);
             }
         }
 
