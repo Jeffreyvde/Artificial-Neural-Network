@@ -14,11 +14,11 @@ namespace NeuralNetworks.Tests
         [TestMethod()]
         public void LayerWeightsInitialized()
         {
-            NeuralNetwork neuralNetwork = new NeuralNetwork(3, 3, 3);
+            NeuralNetwork neuralNetwork = new NeuralNetwork(new Sigmoid(), 3, 3, 3);
 
             for (int i = 1; i < neuralNetwork.layers.Length; i++)
             {
-                
+
                 Assert.IsNotNull(neuralNetwork.layers[i].weights, "Weights of network layers not initialized");
 
             }
@@ -27,7 +27,7 @@ namespace NeuralNetworks.Tests
         [TestMethod()]
         public void LayerNeuronsInitialized()
         {
-            NeuralNetwork neuralNetwork = new NeuralNetwork(3, 3, 3);
+            NeuralNetwork neuralNetwork = new NeuralNetwork(new Sigmoid(), 3, 3, 3);
 
             for (int i = 0; i < neuralNetwork.layers.Length; i++)
             {
