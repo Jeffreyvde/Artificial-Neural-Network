@@ -9,11 +9,13 @@ namespace NeuralNetworks
 
         public Weight[,] weights;
         public readonly Neuron[] neurons;
+        private readonly IActivation activation;
 
-        public Layer(int index, int sizeNeurons)
+        public Layer(int index, int sizeNeurons, IActivation activation)
         {
             this.index = index;
             neurons = new Neuron[sizeNeurons];
+            this.activation = activation;
         }
 
         /// <summary>
@@ -27,7 +29,7 @@ namespace NeuralNetworks
             Vector<double> biases = Converter.ConvertToVector(neurons, false);
 
             Vector<double> weightedSum = weigthMatrix * activations + biases;
-            InitializeNeuron(weightedSum, Sigmoid.CalculateSigmoid(weightedSum));
+            InitializeNeuron(weightedSum, activation.CalculateActivation(weightedSum));
         }
 
         /// <summary>

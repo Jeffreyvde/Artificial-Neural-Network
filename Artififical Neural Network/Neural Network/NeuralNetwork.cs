@@ -5,15 +5,18 @@ namespace NeuralNetworks
     public class NeuralNetwork
     {
         public Layer[] layers;
+        private IActivation activation;
+
 
         /// <summary>
         /// Create a neural network structure. The size include the input and output layers.
         /// </summary>
         /// <param name="layerSizes">sizes of each layer</param>
-        public NeuralNetwork(params int[] layerSizes)
+        public NeuralNetwork(IActivation activation, params int[] layerSizes)
         {
             if (layerSizes.Length <= 2) throw new System.Exception("Neural network can not be smaller than 3 layers.");
 
+            this.activation = activation;
 
             Random random = new Random();
             layers = new Layer[layerSizes.Length];
@@ -49,7 +52,7 @@ namespace NeuralNetworks
         /// <param name="previousNeurons">Optional previous neurons</param>
         private void CreateNewLayer(int index, int size, Random random, Neuron[] previousNeurons)
         {
-            Layer layer = new Layer(index, size);
+            Layer layer = new Layer(index, size, activation);
             layers[index] = layer;
             layer.GenerateNeurons(random);
             if (previousNeurons != null)

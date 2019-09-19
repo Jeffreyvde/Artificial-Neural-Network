@@ -3,14 +3,14 @@ using System;
 
 namespace NeuralNetworks
 {
-    public class Sigmoid : Activation
+    public class Sigmoid : IActivation
     {
         /// <summary>
         /// Calculate the sigmoid function of the double
         /// </summary>
         /// <param name="value"></param>
         /// <returns></returns>
-        public override double CalculateActivation(double value)
+        public double CalculateActivation(double value)
         {
             double exponant = Math.Exp(value);
             return exponant / (1.0f + exponant);
@@ -21,7 +21,7 @@ namespace NeuralNetworks
         /// </summary>
         /// <param name="value">Vector</param>
         /// <returns></returns>
-        public override Vector<double> CalculateActivation(Vector<double> value)
+        public Vector<double> CalculateActivation(Vector<double> value)
         {
             Vector<double> exponant = value.PointwiseExp();
             return exponant / (1.0f + exponant);
@@ -33,7 +33,7 @@ namespace NeuralNetworks
         /// </summary>
         /// <param name="value"></param>
         /// <returns></returns>
-        public override double CalculateDerivativeActivation(double value)
+        public double CalculateDerivativeActivation(double value)
         {
             double derivativeExponant = 1 / (1 + Math.Exp(-value));
             return derivativeExponant * (1 - derivativeExponant);

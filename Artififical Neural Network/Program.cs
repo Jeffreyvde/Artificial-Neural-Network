@@ -8,7 +8,7 @@ namespace Artififical_Neural_Network
     {
         static void Main(string[] args)
         {
-            NeuralNetwork network = new NeuralNetwork(3, 3, 3);
+            NeuralNetwork network = new NeuralNetwork(new Sigmoid(),3, 3, 3);
             TrainingData trainingData = new TrainingData(new double[]{ 1, 0, 1 }, 0);
 
             network.Train(trainingData);

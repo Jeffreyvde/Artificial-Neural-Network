@@ -2,21 +2,21 @@
 
 namespace NeuralNetworks
 {
-    public abstract class Activation
+    public interface IActivation
     {
         /// <summary>
         /// Calculate the activation function of the double
         /// </summary>
         /// <param name="value"></param>
         /// <returns></returns>
-        public abstract double CalculateActivation(double value);
+        double CalculateActivation(double value);
 
         /// <summary>
         /// Calculate the activation function for an entire vector
         /// </summary>
         /// <param name="value">Vector</param>
         /// <returns></returns>
-        public abstract Vector<double> CalculateActivation(Vector<double> value);
+        Vector<double> CalculateActivation(Vector<double> value);
 
 
         /// <summary>
@@ -24,7 +24,7 @@ namespace NeuralNetworks
         /// </summary>
         /// <param name="value"></param>
         /// <returns></returns>
-        public abstract double CalculateDerivativeActivation(double value);
+        double CalculateDerivativeActivation(double value);
 
     }
 }
