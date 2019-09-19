@@ -45,14 +45,16 @@ namespace NeuralNetworks
         /// Backpropogate neural network
         /// </summary>
         /// <param name="trainingData"></param>
-        public void Backpropogate(TrainingData trainingData)
+        public GradientDescent Backpropogate(TrainingData trainingData)
         {
-            layers[layers.Length - 1].BackPropogate(trainingData.correctOutputNeuron);
+            GradientDescent gradient = new GradientDescent();
+            layers[layers.Length - 1].BackPropogate(trainingData.correctOutputNeuron, gradient);
 
             for (int i = layers.Length - 2; i > 0; i--)
             {
-                layers[i].BackPropogate(layers[i + 1]);
+                layers[i].BackPropogate(layers[i + 1], gradient);
             }
+            return gradient;
         }
 
         /// <summary>

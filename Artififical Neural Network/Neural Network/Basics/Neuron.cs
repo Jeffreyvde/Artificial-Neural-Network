@@ -2,7 +2,7 @@
 
 namespace NeuralNetworks
 {
-    public class Neuron
+    public class Neuron : IBackpropogatable
     {
         public readonly int layerIndex, layerRow;
 
@@ -87,6 +87,15 @@ namespace NeuralNetworks
             }
             derivativeCost /= nextLayer.neurons.Length;
             return derivativeActivation * derivativeCost;
+        }
+
+        /// <summary>
+        /// Applies the gradient decent stap
+        /// </summary>
+        /// <param name="step"></param>
+        public void ApplyGradientDecentStep(double step)
+        {
+            bias += step;
         }
     }
 }

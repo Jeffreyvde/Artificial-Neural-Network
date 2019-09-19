@@ -2,7 +2,7 @@
 
 namespace NeuralNetworks
 {
-    public class Weight
+    public class Weight : IBackpropogatable
     {
         public readonly int layerIndex;
         public double weight;
@@ -29,5 +29,15 @@ namespace NeuralNetworks
         {
             return connections.startNeuron.activation * connections.endNeuron.derivativeActivation * connections.endNeuron.derivativeCost;
         }
+        
+        /// <summary>
+        /// Apply the gradient decent step
+        /// </summary>
+        /// <param name="steo"></param>
+        public void ApplyGradientDecentStep(double step)
+        {
+            weight += step;
+        }
+
     }
 }

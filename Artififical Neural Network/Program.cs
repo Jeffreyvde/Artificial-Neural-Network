@@ -11,7 +11,8 @@ namespace Artififical_Neural_Network
             TrainingData trainingData = new TrainingData(new double[]{ 1, 0, 1 }, 0);
 
             network.Train(trainingData);
-
+            GradientDescent gradientDecent  =  network.Backpropogate(trainingData);
+            gradientDecent.Apply();
             Console.Read();
         }
     }
