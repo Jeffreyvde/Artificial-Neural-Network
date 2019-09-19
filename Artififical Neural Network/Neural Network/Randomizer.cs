@@ -2,7 +2,7 @@
 
 public static class Randomizer
 {
-    private static readonly Random random = new Random(DateTime.Now.Second + DateTime.Now.Day);
+    private static readonly Random random = new Random();
 
     /// <summary>
     /// Get a random bool betwen miniumum and maximum.

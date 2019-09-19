@@ -12,8 +12,8 @@ namespace NeuralNetworks
         public double weightedSum;
 
         //Backpropogation
-        public double derivateWeightedSum;
-        public double derivateActivation;
+        public double derivativeActivation;
+        public double derivativeCost;
 
         /// <summary>
         /// Constructor for Neuron class. That generates random bias between -1 and 1.
@@ -38,6 +38,34 @@ namespace NeuralNetworks
             this.layerRow = layerRow;
 
             this.activation = activation;
+        }
+
+        /// <summary>
+        /// Set the required values of this neuron
+        /// </summary>
+        /// <param name="weightedSum"></param>
+        /// <param name="activation"></param>
+        public void SetValues(double weightedSum, double activation, IActivation activationFunction)
+        {
+            this.weightedSum = weightedSum;
+            this.activation = activation;
+
+            derivativeActivation = activationFunction.CalculateDerivativeActivation(weightedSum);
+        }
+
+        /// <summary>
+        /// Calculate the cost with training data
+        /// </summary>
+        /// <param name="trainingData">value from training data</param>
+        /// <param name="derivative">Do you want the derivative value</param>
+        /// <returns></returns>
+        public double CalculateCost(double trainingData, bool derivative = false)
+        {
+            if (!derivative)
+                return Math.Pow(activation - trainingData, 2);
+
+            derivativeCost = 2 * (activation - trainingData);
+            return derivativeCost;
         }
     }
 }

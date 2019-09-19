@@ -58,6 +58,7 @@
     <Compile Include="Neural Network\Basics\Neuron.cs" />
     <Compile Include="Neural Network\Basics\Weight.cs" />
     <Compile Include="Neural Network\Activation\Sigmoid.cs" />
+    <Compile Include="Neural Network\Randomizer.cs" />
     <Compile Include="Neural Network\Training\TrainingData.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

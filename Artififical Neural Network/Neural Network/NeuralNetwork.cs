@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace NeuralNetworks
+﻿namespace NeuralNetworks
 {
     public class NeuralNetwork
     {
