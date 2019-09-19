@@ -18,14 +18,13 @@ namespace NeuralNetworks
 
             this.activation = activation;
 
-            Random random = new Random();
             layers = new Layer[layerSizes.Length];
 
-            CreateNewLayer(0, layerSizes[0], random, null);
+            CreateNewLayer(0, layerSizes[0], null);
 
             for (int i = 1; i < layerSizes.Length; i++)
             {
-                CreateNewLayer(i, layerSizes[i], random, layers[i - 1].neurons);
+                CreateNewLayer(i, layerSizes[i], layers[i - 1].neurons);
             }
 
         }
@@ -50,13 +49,13 @@ namespace NeuralNetworks
         /// <param name="size">What is the size of this new layer</param>
         /// <param name="random">Random as optimilization</param>
         /// <param name="previousNeurons">Optional previous neurons</param>
-        private void CreateNewLayer(int index, int size, Random random, Neuron[] previousNeurons)
+        private void CreateNewLayer(int index, int size, Neuron[] previousNeurons)
         {
             Layer layer = new Layer(index, size, activation);
             layers[index] = layer;
-            layer.GenerateNeurons(random);
+            layer.GenerateNeurons();
             if (previousNeurons != null)
-                layer.GenerateWeights(previousNeurons, random);
+                layer.GenerateWeights(previousNeurons);
         }
     }
 }

@@ -49,19 +49,17 @@ namespace NeuralNetworks
         /// <summary>
         /// Generate an array of neurons
         /// </summary>
-        /// <param name="random">Random generator for optimilization</param>
-        public void GenerateNeurons(Random random)
+        public void GenerateNeurons()
         {
             for (int i = 0; i < neurons.Length; i++)
             {
-                neurons[i] = new Neuron(index, i, random);
+                neurons[i] = new Neuron(index, i);
             }
         }
 
         /// <summary>
         /// Assing an array of neurons with input data
         /// </summary>
-        /// <param name="random">Random generator for optimilization</param>
         public void AssingNeurons(double[] input)
         {
 
@@ -77,15 +75,14 @@ namespace NeuralNetworks
         /// Generate weights for this layer
         /// </summary>
         /// <param name="previousNeurons">previous neurons to create Connection</param>
-        /// <param name="random">Random generator for optimilization</param>
-        public void GenerateWeights(Neuron[] previousNeurons, Random random)
+        public void GenerateWeights(Neuron[] previousNeurons)
         {
             weights = new Weight[neurons.Length, previousNeurons.Length];
             for (int i = 0; i < neurons.Length; i++)
             {
                 for (int j = 0; j < previousNeurons.Length; j++)
                 {
-                    weights[i, j] = new Weight(index, neurons[i], previousNeurons[j], random);
+                    weights[i, j] = new Weight(index, neurons[i], previousNeurons[j]);
                 }
             }
         }

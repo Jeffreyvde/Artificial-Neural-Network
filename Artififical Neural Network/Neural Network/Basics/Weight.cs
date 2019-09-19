@@ -10,15 +10,14 @@ namespace NeuralNetworks
         public Connection connections;
 
         /// <summary>
-        /// Constructor for Weight class. That generates random weight between 0 and 1.
+        /// Constructor for Weight class. That generates random weight between -1 and 1.
         /// </summary>
         /// <param name="layerIndex"></param>
-        /// <param name="random"></param>
-        public Weight(int layerIndex, Neuron startNeuron, Neuron endNeuron, Random random)
+        public Weight(int layerIndex, Neuron startNeuron, Neuron endNeuron)
         {
             this.layerIndex = layerIndex;
 
-            weight = (float)random.NextDouble();
+            weight = Randomizer.GetRandomNumber(-1,1);
             connections = new Connection(startNeuron, endNeuron);
         }
     }
