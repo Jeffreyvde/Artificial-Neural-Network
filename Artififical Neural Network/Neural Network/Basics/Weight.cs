@@ -21,6 +21,10 @@ namespace NeuralNetworks
             connections = new Connection(startNeuron, endNeuron);
         }
 
+        /// <summary>
+        /// Back propogate the weight
+        /// </summary>
+        /// <returns></returns>
         public double BackPropogate()
         {
             return connections.startNeuron.activation * connections.endNeuron.derivativeActivation * connections.endNeuron.derivativeCost;

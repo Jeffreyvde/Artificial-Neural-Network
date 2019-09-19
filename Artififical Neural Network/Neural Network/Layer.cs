@@ -84,6 +84,12 @@ namespace NeuralNetworks
             for (int i = 0; i < neurons.Length; i++)
             {
                 neurons[i].BackPropogate(nextLayer);
+
+                for(int x = 0; x < nextLayer.neurons.Length; x++)
+                {
+                    for (int y = 0; y < neurons.Length; y++)
+                        nextLayer.GetWeight(x, y).BackPropogate();
+                }
             }
         }
 
