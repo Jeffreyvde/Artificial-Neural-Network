@@ -46,7 +46,7 @@ namespace NeuralNetworks
         /// Train this layer
         /// </summary>
         /// <param name="previousNeurons"></param>
-        public void Train(Neuron[] previousNeurons)
+        public void FeedForward(Neuron[] previousNeurons)
         {
             Matrix<double> weigthMatrix = Converter.ConvertToMatrix(weights, neurons.Length, previousNeurons.Length);
             Vector<double> activations = Converter.ConvertToVector(previousNeurons, true);

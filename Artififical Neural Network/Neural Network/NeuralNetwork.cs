@@ -31,13 +31,13 @@ namespace NeuralNetworks
         /// <summary>
         /// Train the neural network
         /// </summary>
-        public void Train(TrainingData trainingData)
+        public void FeedForward(TrainingData trainingData)
         {
             SetInputLayer(trainingData.inputData);
 
             for (int i = 1; i < layers.Length; i++)
             {
-                layers[i].Train(layers[i - 1].neurons);
+                layers[i].FeedForward(layers[i - 1].neurons);
             }
         }
 
