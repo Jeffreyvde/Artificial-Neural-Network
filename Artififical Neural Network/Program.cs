@@ -8,7 +8,7 @@ namespace Artififical_Neural_Network
         static void Main()
         {
             NeuralNetwork network = new NeuralNetwork(new Sigmoid(),3, 3, 3);
-            TrainingData trainingData = new TrainingData(new double[]{ 1, 0, 1 }, 0);
+            TrainingData trainingData = new TrainingData(new double[]{ 1, 0.1, 1 }, 0);
 
             network.FeedForward(trainingData);
             GradientDescent gradientDecent  =  network.Backpropogate(trainingData);

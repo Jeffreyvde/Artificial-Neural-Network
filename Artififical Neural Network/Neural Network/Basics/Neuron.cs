@@ -15,6 +15,8 @@ namespace NeuralNetworks
         public double derivativeActivation;
         public double derivativeCost;
 
+        #region Initialization
+
         /// <summary>
         /// Constructor for Neuron class. That generates random bias between -1 and 1.
         /// </summary>
@@ -53,6 +55,10 @@ namespace NeuralNetworks
             derivativeActivation = activationFunction.CalculateDerivativeActivation(weightedSum);
         }
 
+        #endregion
+        #region Backpropogation
+
+
         /// <summary>
         /// Calculate the cost with training data
         /// </summary>
@@ -68,17 +74,17 @@ namespace NeuralNetworks
         /// Backpropogate this output neuron
         /// </summary>
         /// <param name="traningData"></param>
-        public double BackPropogate(int traningData)
+        public void BackPropogate(int traningData, GradientDescent gradientDecent)
         {
             derivativeCost = 2 * (activation - traningData);
-            return derivativeActivation * derivativeCost;
+            gradientDecent.Add(derivativeActivation * derivativeCost, this);
         }
 
         /// <summary>
         /// Backpropogate this hidden neuron
         /// </summary>
         /// <param name="nextLayer"></param>
-        public double BackPropogate(Layer nextLayer)
+        public void BackPropogate(Layer nextLayer, GradientDescent gradientDecent)
         {
             for (int i = 0; i < nextLayer.neurons.Length; i++)
             {
@@ -86,7 +92,8 @@ namespace NeuralNetworks
                 derivativeCost += nextLayer.GetWeight(i, layerRow).weight * neuron.derivativeActivation * neuron.derivativeCost;
             }
             derivativeCost /= nextLayer.neurons.Length;
-            return derivativeActivation * derivativeCost;
+
+            gradientDecent.Add(derivativeActivation * derivativeCost, this);
         }
 
         /// <summary>
@@ -97,5 +104,7 @@ namespace NeuralNetworks
         {
             bias += step;
         }
+
+        #endregion
     }
 }

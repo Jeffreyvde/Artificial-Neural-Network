@@ -8,6 +8,9 @@ namespace NeuralNetworks
         public readonly int index;
 
         public Weight[,] weights;
+        private int weightRows, weightColumns;
+
+
         public readonly Neuron[] neurons;
         private readonly IActivation activationFunction;
 
@@ -30,12 +33,15 @@ namespace NeuralNetworks
         /// <param name="previousNeurons">previous neurons to create Connection</param>
         public void GenerateWeights(Neuron[] previousNeurons)
         {
+            weightRows = neurons.Length;
+            weightColumns = previousNeurons.Length;
+
             weights = new Weight[neurons.Length, previousNeurons.Length];
             for (int i = 0; i < neurons.Length; i++)
             {
                 for (int j = 0; j < previousNeurons.Length; j++)
                 {
-                    weights[i, j] = new Weight(index, neurons[i], previousNeurons[j]);
+                    weights[i, j] = new Weight(index, previousNeurons[j], neurons[i]);
                 }
             }
         }
@@ -71,7 +77,7 @@ namespace NeuralNetworks
         {
             for (int i = 0; i < neurons.Length; i++)
             {
-                gradient.Add(neurons[i].BackPropogate(correctOutputNeuron == i ? 1 : 0), neurons[i]);
+                neurons[i].BackPropogate(correctOutputNeuron == i ? 1 : 0, gradient);
             }
             BackPropogateWeights(gradient);
         }
@@ -84,7 +90,7 @@ namespace NeuralNetworks
         {
             for (int i = 0; i < neurons.Length; i++)
             {
-                gradient.Add(neurons[i].BackPropogate(nextLayer), neurons[i]);
+                neurons[i].BackPropogate(nextLayer, gradient);
             }
             BackPropogateWeights(gradient);
         }
@@ -95,12 +101,11 @@ namespace NeuralNetworks
         /// <param name="gradient"></param>
         private void BackPropogateWeights(GradientDescent gradient)
         {
-            for (int x = 0; x < neurons.Length; x++)
+            for (int x = 0; x < weightRows; x++)
             {
-                for (int y = 0; y < neurons.Length; y++)
+                for (int y = 0; y < weightColumns; y++)
                 {
-                    Weight weight = GetWeight(x, y);
-                    gradient.Add(weight.BackPropogate(), weight);
+                    GetWeight(x, y).BackPropogate(gradient);
                 }
             }
         }

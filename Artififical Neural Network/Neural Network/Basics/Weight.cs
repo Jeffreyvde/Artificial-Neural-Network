@@ -25,9 +25,10 @@ namespace NeuralNetworks
         /// Back propogate the weight
         /// </summary>
         /// <returns></returns>
-        public double BackPropogate()
+        public void BackPropogate(GradientDescent gradient)
         {
-            return connections.startNeuron.activation * connections.endNeuron.derivativeActivation * connections.endNeuron.derivativeCost;
+            double value = connections.startNeuron.activation * connections.endNeuron.derivativeActivation * connections.endNeuron.derivativeCost;
+            gradient.Add(value, this);
         }
         
         /// <summary>
