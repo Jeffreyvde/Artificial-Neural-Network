@@ -84,7 +84,7 @@ namespace NeuralNetworks
 
             for (int i = 0; i < layer.neurons.Length; i++)
             {
-                layer.neurons[i] = new Neuron(0, i, input[i]);
+                layer.neurons[i].activation = input[i];
             }
         }
     }
