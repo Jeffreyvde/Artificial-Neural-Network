@@ -84,7 +84,7 @@ namespace NeuralNetworks
         /// Initialize the input layer
         /// </summary>
         /// <param name="input"></param>
-        private void SetInputLayer(double[] input)
+        private void SetInputLayer(byte[] input)
         {
             Layer layer = layers[0];
 

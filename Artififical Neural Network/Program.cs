@@ -10,12 +10,22 @@ namespace Artififical_Neural_Network
 
         static void Main()
         {
-            NeuralNetwork network = NeuralNetwork.Load("D:/Code/C#/Artificial Neural Networks/TestResults/Test.txt", new Sigmoid());// new NeuralNetwork(new Sigmoid(), 3, 3, 3);
-            TrainingData trainingData = new TrainingData(new double[] { 1, 0.1, 1 }, 0);
+            MNIST.MnistDataSet dataset = new MNIST.MnistDataSet(@"D:\Code\C#\Artificial Neural Networks\DataSet\Test\t10k-labels.idx1-ubyte", @"D:\Code\C#\Artificial Neural Networks\DataSet\Test\t10k-images.idx3-ubyte");
 
-            network.FeedForward(trainingData);
-            gradientDescent = network.Backpropogate(trainingData);
-            gradientDescent.Apply();
+            NeuralNetwork network = new NeuralNetwork(new Sigmoid(), dataset.trainingData[0].inputData.Length, 16,16, 10);
+
+
+           network.FeedForward(dataset.trainingData[0]);
+           gradientDescent = network.Backpropogate(dataset.trainingData[0]);
+
+            for (int i = 1; i < dataset.trainingData.Length; i++)
+            {
+                TrainingData training = dataset.trainingData[i];
+                network.FeedForward(training);
+                gradientDescent += network.Backpropogate(training);
+                Console.WriteLine("Finished: " + i);
+            }
+            gradientDescent /= dataset.trainingData.Length;
 
             network.Save("D:/Code/C#/Artificial Neural Networks/TestResults/Test.txt");
 

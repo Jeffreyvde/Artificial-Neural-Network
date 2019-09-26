@@ -51,6 +51,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Mnist\BigEndianUtils.cs" />
+    <Compile Include="Mnist\MNIST.cs" />
     <Compile Include="Neural Network\Activation\Activation.cs" />
     <Compile Include="Neural Network\Backpropogation\GradientDecentValue.cs" />
     <Compile Include="Neural Network\Backpropogation\GradientDescent.cs" />
@@ -73,7 +75,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Neural Network\Batches\" />
-    <Folder Include="Neural Network\Save\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
