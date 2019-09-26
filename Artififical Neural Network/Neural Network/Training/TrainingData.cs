@@ -2,10 +2,10 @@
 {
     public class TrainingData
     {
-        public double[] inputData;
-        public int correctOutputNeuron;
+        public byte[] inputData;
+        public byte correctOutputNeuron;
 
-        public TrainingData(double[] input, int correctOuput)
+        public TrainingData(byte[] input, byte correctOuput)
         {
             inputData = input;
             correctOutputNeuron = correctOuput;
