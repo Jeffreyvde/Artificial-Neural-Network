@@ -74,7 +74,7 @@ namespace NeuralNetworks
         /// <param name="previousNeurons">Optional previous neurons</param>
         private void CreateNewLayer(int index, int size, Neuron[] previousNeurons)
         {
-            Layer layer = new Layer(index, size, activation);
+            Layer layer = new Layer(index, size);
             layers[index] = layer;
             if (previousNeurons != null)
                 layer.GenerateWeights(previousNeurons);
@@ -96,7 +96,6 @@ namespace NeuralNetworks
             }
         }
 
-        #region IO
 
         public void Save(string path)
         {
@@ -112,14 +111,15 @@ namespace NeuralNetworks
             }
         }
 
-        public static NeuralNetwork Load(string path)
+        public static NeuralNetwork Load(string path, IActivation activation)
         {
             using (StreamReader r = new StreamReader(path))
             {
                 string json = r.ReadToEnd();
-                return JsonConvert.DeserializeObject<NeuralNetwork>(json);
+                NeuralNetwork value = JsonConvert.DeserializeObject<NeuralNetwork>(json);
+                NeuralNetwork.activation = activation;
+                return value;
             }
         }
-        #endregion
     }
 }

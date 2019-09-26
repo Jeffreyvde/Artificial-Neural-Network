@@ -63,12 +63,12 @@ namespace NeuralNetworks
         /// </summary>
         /// <param name="weightedSum"></param>
         /// <param name="activation"></param>
-        public void SetValues(double weightedSum, double activation, IActivation activationFunction)
+        public void SetValues(double weightedSum, double activation)
         {
             this.weightedSum = weightedSum;
             this.activation = activation;
 
-            derivativeActivation = activationFunction.CalculateDerivativeActivation(weightedSum);
+            derivativeActivation = NeuralNetwork.activation.CalculateDerivativeActivation(weightedSum);
         }
 
         #endregion

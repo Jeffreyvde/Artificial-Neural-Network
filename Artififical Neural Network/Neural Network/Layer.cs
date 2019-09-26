@@ -12,13 +12,11 @@ namespace NeuralNetworks
 
 
         public readonly Neuron[] neurons;
-        private IActivation activationFunction;
 
         #region Initialization
-        public Layer(int index, int sizeNeurons, IActivation activationFunction)
+        public Layer(int index, int sizeNeurons)
         {
             this.index = index;
-            this.activationFunction = activationFunction;
 
             neurons = new Neuron[sizeNeurons];
             for (int i = 0; i < neurons.Length; i++)
@@ -28,14 +26,13 @@ namespace NeuralNetworks
         }
 
         [JsonConstructor()]
-        public Layer(int index, Weight[,] weights, int weightRows, int weightColumns, Neuron[] neurons, IActivation activationFunction)
+        public Layer(int index, Weight[,] weights, int weightRows, int weightColumns, Neuron[] neurons)
         {
             this.index = index;
             this.weights = weights;
             this.weightRows = weightRows;
             this.weightColumns = weightColumns;
             this.neurons = neurons;
-            this.activationFunction = activationFunction;
         }
 
         /// <summary>
@@ -70,10 +67,10 @@ namespace NeuralNetworks
             Vector<double> biases = Converter.ConvertToVector(neurons, false);
 
             Vector<double> weightedSum = weigthMatrix * activations + biases;
-            activations = activationFunction.CalculateActivation(weightedSum);
+            activations = NeuralNetwork.activation.CalculateActivation(weightedSum);
             for (int i = 0; i < neurons.Length; i++)
             {
-                neurons[i].SetValues(weightedSum[i], activations[i], activationFunction);
+                neurons[i].SetValues(weightedSum[i], activations[i]);
             }
         }
 

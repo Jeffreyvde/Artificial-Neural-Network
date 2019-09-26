@@ -10,7 +10,7 @@ namespace Artififical_Neural_Network
 
         static void Main()
         {
-            NeuralNetwork network = NeuralNetwork.Load("D:/Code/C#/Artificial Neural Networks/TestResults/Test.txt"); // new NeuralNetwork(new Sigmoid(), 3, 3, 3);
+            NeuralNetwork network = NeuralNetwork.Load("D:/Code/C#/Artificial Neural Networks/TestResults/Test.txt", new Sigmoid());// new NeuralNetwork(new Sigmoid(), 3, 3, 3);
             TrainingData trainingData = new TrainingData(new double[] { 1, 0.1, 1 }, 0);
 
             network.FeedForward(trainingData);
