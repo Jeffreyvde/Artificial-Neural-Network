@@ -1,12 +1,14 @@
 ﻿using System;
-using System.Linq;
+using System.IO;
+using System.Text;
+using Newtonsoft.Json;
 
 namespace NeuralNetworks
 {
     public class NeuralNetwork
     {
         public Layer[] layers;
-        private readonly IActivation activation;
+        public static IActivation activation;
 
         /// <summary>
         /// Create a neural network structure. The size include the input and output layers.
@@ -16,7 +18,7 @@ namespace NeuralNetworks
         {
             if (layerSizes.Length <= 2) throw new System.Exception("Neural network can not be smaller than 3 layers.");
 
-            this.activation = activation;
+            NeuralNetwork.activation = activation;
 
             layers = new Layer[layerSizes.Length];
 
@@ -26,6 +28,12 @@ namespace NeuralNetworks
             {
                 CreateNewLayer(i, layerSizes[i], layers[i - 1].neurons);
             }
+        }
+
+        [JsonConstructor()]
+        public NeuralNetwork(Layer[] layers)
+        {
+            this.layers = layers;
         }
 
         /// <summary>
@@ -87,5 +95,31 @@ namespace NeuralNetworks
                 layer.neurons[i].activation = input[i];
             }
         }
+
+        #region IO
+
+        public void Save(string path)
+        {
+            if (File.Exists(path))
+            {
+                File.Delete(path);
+            }
+            using (FileStream fs = File.Create(path))
+            {
+                Byte[] info = new UTF8Encoding(true).GetBytes(JsonConvert.SerializeObject(this, new JsonSerializerSettings { PreserveReferencesHandling = PreserveReferencesHandling.Objects }));
+                // Add some information to the file.
+                fs.Write(info, 0, info.Length);
+            }
+        }
+
+        public static NeuralNetwork Load(string path)
+        {
+            using (StreamReader r = new StreamReader(path))
+            {
+                string json = r.ReadToEnd();
+                return JsonConvert.DeserializeObject<NeuralNetwork>(json);
+            }
+        }
+        #endregion
     }
 }
