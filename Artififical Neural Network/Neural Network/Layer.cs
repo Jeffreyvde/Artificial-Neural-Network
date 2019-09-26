@@ -1,4 +1,4 @@
-﻿using System;
+﻿using Newtonsoft.Json;
 using MathNet.Numerics.LinearAlgebra;
 
 namespace NeuralNetworks
@@ -12,7 +12,7 @@ namespace NeuralNetworks
 
 
         public readonly Neuron[] neurons;
-        private readonly IActivation activationFunction;
+        private IActivation activationFunction;
 
         #region Initialization
         public Layer(int index, int sizeNeurons, IActivation activationFunction)
@@ -25,6 +25,17 @@ namespace NeuralNetworks
             {
                 neurons[i] = new Neuron(index, i);
             }
+        }
+
+        [JsonConstructor()]
+        public Layer(int index, Weight[,] weights, int weightRows, int weightColumns, Neuron[] neurons, IActivation activationFunction)
+        {
+            this.index = index;
+            this.weights = weights;
+            this.weightRows = weightRows;
+            this.weightColumns = weightColumns;
+            this.neurons = neurons;
+            this.activationFunction = activationFunction;
         }
 
         /// <summary>

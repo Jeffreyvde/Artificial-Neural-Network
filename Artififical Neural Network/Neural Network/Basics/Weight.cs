@@ -1,4 +1,4 @@
-﻿using System;
+﻿using Newtonsoft.Json;
 
 namespace NeuralNetworks
 {
@@ -7,7 +7,7 @@ namespace NeuralNetworks
         public readonly int layerIndex;
         public double weight;
 
-        public Connection connections;
+        public Connection connection;
 
         /// <summary>
         /// Constructor for Weight class. That generates random weight between -1 and 1.
@@ -18,7 +18,15 @@ namespace NeuralNetworks
             this.layerIndex = layerIndex;
 
             weight = Randomizer.GetRandomNumber(-1, 1);
-            connections = new Connection(startNeuron, endNeuron);
+            connection = new Connection(startNeuron, endNeuron);
+        }
+
+        [JsonConstructor]
+        public Weight(int layerIndex, Connection connection, double weight)
+        {
+            this.layerIndex = layerIndex;
+            this.weight = weight;
+            this.connection = connection;
         }
 
         /// <summary>
@@ -27,7 +35,7 @@ namespace NeuralNetworks
         /// <returns></returns>
         public void BackPropogate(GradientDescent gradient)
         {
-            double value = connections.startNeuron.activation * connections.endNeuron.derivativeActivation * connections.endNeuron.derivativeCost;
+            double value = connection.startNeuron.activation * connection.endNeuron.derivativeActivation * connection.endNeuron.derivativeCost;
             gradient.Add(value, this);
         }
         

@@ -1,4 +1,5 @@
 ﻿using System;
+using Newtonsoft.Json;
 
 namespace NeuralNetworks
 {
@@ -6,14 +7,14 @@ namespace NeuralNetworks
     {
         public readonly int layerIndex, layerRow;
 
-        public double activation;
+        [JsonIgnore] public double activation;
 
         public double bias;
-        public double weightedSum;
+        [JsonIgnore] public double weightedSum;
 
         //Backpropogation
-        public double derivativeActivation;
-        public double derivativeCost;
+        [JsonIgnore] public double derivativeActivation;
+        [JsonIgnore] public double derivativeCost;
 
         #region Initialization
 
@@ -34,12 +35,27 @@ namespace NeuralNetworks
         /// </summary>
         /// <param name="layerIndex"></param>
         /// <param name="random"></param>
-        public Neuron(int layerIndex, int layerRow, double activation)
+        public Neuron(int layerIndex, int layerRow, float activation)
         {
             this.layerIndex = layerIndex;
             this.layerRow = layerRow;
 
             this.activation = activation;
+        }
+
+        /// <summary>
+        /// Json constructor
+        /// </summary>
+        /// <param name="layerIndex"></param>
+        /// <param name="layerRow"></param>
+        /// <param name="bias"></param>
+        [JsonConstructor()]
+        public Neuron(int layerIndex, int layerRow, double bias)
+        {
+            this.layerIndex = layerIndex;
+            this.layerRow = layerRow;
+
+            this.bias = bias;
         }
 
         /// <summary>
