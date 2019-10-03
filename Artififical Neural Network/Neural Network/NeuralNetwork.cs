@@ -84,7 +84,7 @@ namespace NeuralNetworks
         /// Initialize the input layer
         /// </summary>
         /// <param name="input"></param>
-        private void SetInputLayer(byte[] input)
+        private void SetInputLayer(double[] input)
         {
             Layer layer = layers[0];
 
@@ -94,6 +94,36 @@ namespace NeuralNetworks
             {
                 layer.neurons[i].activation = input[i];
             }
+        }
+
+        public double CalculateCost(int correctOuput)
+        {
+            Layer lastLayer = layers[layers.Length - 1];
+
+            double cost = 0;
+            for (int i = 0; i < lastLayer.neurons.Length; i++)
+            {
+                cost += lastLayer.neurons[i].CalculateCost(correctOuput);
+            }
+            return cost / lastLayer.neurons.Length;
+        }
+
+        public bool IsNeuralNetworkCorrect(int correctOutput)
+        {
+            Layer lastLayer = layers[layers.Length - 1];
+
+            int guess = 0;
+            double highestActivation = 0;
+            for (int i = 0; i < lastLayer.neurons.Length; i++)
+            {
+                double activation = lastLayer.neurons[i].activation;
+                if (highestActivation < activation)
+                {
+                    guess = i;
+                    highestActivation = activation;
+                }
+            }
+            return guess == correctOutput;
         }
 
 
