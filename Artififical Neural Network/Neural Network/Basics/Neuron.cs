@@ -27,7 +27,7 @@ namespace NeuralNetworks
             this.layerIndex = layerIndex;
             this.layerRow = layerRow;
 
-            bias = Randomizer.GetRandomNumber(-1, 1);
+            bias = Randomizer.Range(-1, 1);
         }
 
         /// <summary>

@@ -17,7 +17,7 @@ namespace NeuralNetworks
         {
             this.layerIndex = layerIndex;
 
-            weight = Randomizer.GetRandomNumber(-1, 1);
+            weight = Randomizer.Range(-1, 1);
             connection = new Connection(startNeuron, endNeuron);
         }
 
