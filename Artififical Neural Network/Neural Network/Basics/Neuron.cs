@@ -116,9 +116,9 @@ namespace NeuralNetworks
         /// Applies the gradient decent stap
         /// </summary>
         /// <param name="step"></param>
-        public void ApplyGradientDecentStep(double step)
+        public void ApplyGradientDecentStep(double step, double learningRate)
         {
-            bias += step;
+            bias -= learningRate * step;
         }
 
         #endregion

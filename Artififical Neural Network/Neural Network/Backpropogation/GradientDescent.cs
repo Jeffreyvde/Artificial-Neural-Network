@@ -11,17 +11,17 @@ namespace NeuralNetworks
         /// </summary>
         public void Add(double step, IBackpropogatable backpropogatable)
         {
-            steps.Add(new GradientDecentValue(-step, backpropogatable));
+            steps.Add(new GradientDecentValue(step, backpropogatable));
         }
 
         /// <summary>
         /// Apply gradient decent 
         /// </summary>
-        public void Apply()
+        public void Apply(double learningRate)
         {
             for (int i = 0; i < steps.Count; i++)
             {
-                steps[i].Apply();
+                steps[i].Apply(learningRate);
             }
         }
 
@@ -46,7 +46,7 @@ namespace NeuralNetworks
         }
 
         /// <summary>
-        /// Gradient descent 
+        /// Gradient descent divide
         /// </summary>
         /// <param name="a"></param>
         /// <param name="division"></param>
@@ -57,6 +57,24 @@ namespace NeuralNetworks
             {
                 GradientDecentValue step = a.steps[i];
                 step.stepValue /= division;
+            }
+
+            return a;
+        }
+
+
+        /// <summary>
+        /// Gradient descent *
+        /// </summary>
+        /// <param name="a"></param>
+        /// <param name="times"></param>
+        /// <returns></returns>
+        public static GradientDescent operator *(GradientDescent a, float times)
+        {
+            for (int i = 0; i < a.steps.Count; i++)
+            {
+                GradientDecentValue step = a.steps[i];
+                step.stepValue *= times;
             }
 
             return a;

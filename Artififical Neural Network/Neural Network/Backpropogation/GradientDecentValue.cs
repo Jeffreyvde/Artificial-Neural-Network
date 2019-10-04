@@ -12,9 +12,9 @@
             this.changedObject = changedObject;
         }
 
-        public void Apply()
+        public void Apply(double learningRate)
         {
-            changedObject.ApplyGradientDecentStep(stepValue);
+            changedObject.ApplyGradientDecentStep(stepValue, learningRate);
         }
     }
 }

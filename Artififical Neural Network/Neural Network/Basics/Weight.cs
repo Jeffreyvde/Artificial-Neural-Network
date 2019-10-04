@@ -43,9 +43,9 @@ namespace NeuralNetworks
         /// Apply the gradient decent step
         /// </summary>
         /// <param name="steo"></param>
-        public void ApplyGradientDecentStep(double step)
+        public void ApplyGradientDecentStep(double step, double learningRate)
         {
-            weight += step;
+            weight -= learningRate * step;
         }
 
     }

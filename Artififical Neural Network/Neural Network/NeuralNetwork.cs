@@ -5,7 +5,7 @@ using Newtonsoft.Json;
 
 namespace NeuralNetworks
 {
-    public class NeuralNetwork
+    public struct NeuralNetwork
     {
         public Layer[] layers;
         public static IActivation activation;
