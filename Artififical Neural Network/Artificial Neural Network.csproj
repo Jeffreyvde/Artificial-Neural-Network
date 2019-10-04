@@ -54,6 +54,8 @@
     <Compile Include="Mnist\BigEndianUtils.cs" />
     <Compile Include="Mnist\MNIST.cs" />
     <Compile Include="Neural Network\Activation\Activation.cs" />
+    <Compile Include="Neural Network\Backpropogation\Batches\Batch.cs" />
+    <Compile Include="Neural Network\Backpropogation\Batches\TrainingManager.cs" />
     <Compile Include="Neural Network\Backpropogation\GradientDecentValue.cs" />
     <Compile Include="Neural Network\Backpropogation\GradientDescent.cs" />
     <Compile Include="Neural Network\Backpropogation\IBackpropogatable.cs" />
