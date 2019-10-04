@@ -59,7 +59,7 @@ namespace MNIST
             {
                 for (int y = 0; y < numCols; ++y)
                 {
-                    data[x + (y * numCols)] = image.ReadByte() / 255;
+                    data[x + (y * numCols)] = image.ReadByte() / 255f;
                 }
             }
             return new TrainingData(data, label.ReadByte());
