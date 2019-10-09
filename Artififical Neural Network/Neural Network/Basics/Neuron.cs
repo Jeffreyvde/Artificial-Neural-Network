@@ -1,20 +1,33 @@
-﻿using System;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
+using System;
+using System.Threading;
 
 namespace NeuralNetworks
 {
     public class Neuron : IBackpropogatable
     {
         public readonly int layerIndex, layerRow;
-
-        [JsonIgnore] public double activation;
-
         public double bias;
-        [JsonIgnore] public double weightedSum;
+
+        //Feedforward 
+        [JsonIgnore]
+        public double Activation {
+            get { return feedforwardCache.Value.activation; }
+            set {
+                feedforwardCache = new ThreadLocal<FeedforwardCache>
+                {
+                    Value = new FeedforwardCache(value, 0)
+                };
+            }
+        }
+
 
         //Backpropogation
-        [JsonIgnore] public double derivativeActivation;
-        [JsonIgnore] public double derivativeCost;
+        [JsonIgnore] public double DerivativeActivation { get { return feedforwardCache.Value.derivativeActivation; } }
+        [JsonIgnore] public double DerivativeCost { get { return backpropCache.Value.derivativeCost; } }
+
+        [JsonIgnore] private ThreadLocal<FeedforwardCache> feedforwardCache;
+        [JsonIgnore] private ThreadLocal<BackpropCache> backpropCache;
 
         #region Initialization
 
@@ -28,19 +41,6 @@ namespace NeuralNetworks
             this.layerRow = layerRow;
 
             bias = Randomizer.Range(-1, 1);
-        }
-
-        /// <summary>
-        /// Constructor for Neuron class. That already has an activation.
-        /// </summary>
-        /// <param name="layerIndex"></param>
-        /// <param name="random"></param>
-        public Neuron(int layerIndex, int layerRow, float activation)
-        {
-            this.layerIndex = layerIndex;
-            this.layerRow = layerRow;
-
-            this.activation = activation;
         }
 
         /// <summary>
@@ -65,10 +65,10 @@ namespace NeuralNetworks
         /// <param name="activation"></param>
         public void SetValues(double weightedSum, double activation)
         {
-            this.weightedSum = weightedSum;
-            this.activation = activation;
-
-            derivativeActivation = NeuralNetwork.activation.CalculateDerivativeActivation(weightedSum);
+            feedforwardCache = new ThreadLocal<FeedforwardCache>
+            {
+                Value = new FeedforwardCache(activation, NeuralNetwork.activation.CalculateDerivativeActivation(weightedSum))
+            };
         }
 
         #endregion
@@ -83,7 +83,7 @@ namespace NeuralNetworks
         /// <returns></returns>
         public double CalculateCost(double trainingData)
         {
-            return Math.Pow(activation - trainingData, 2);
+            return Math.Pow(Activation - trainingData, 2);
         }
 
         /// <summary>
@@ -92,8 +92,10 @@ namespace NeuralNetworks
         /// <param name="traningData"></param>
         public void BackPropogate(int traningData, GradientDescent gradientDecent)
         {
-            derivativeCost = 2 * (activation - traningData);
-            gradientDecent.Add(derivativeActivation * derivativeCost, this);
+            double derivativeCost = 2 * (Activation - traningData);
+
+            SetBackPropCache(derivativeCost);
+            gradientDecent.Add(DerivativeActivation * DerivativeCost, this);
         }
 
         /// <summary>
@@ -102,14 +104,16 @@ namespace NeuralNetworks
         /// <param name="nextLayer"></param>
         public void BackPropogate(Layer nextLayer, GradientDescent gradientDecent)
         {
+            double derivativeCost = 0;
             for (int i = 0; i < nextLayer.neurons.Length; i++)
             {
                 Neuron neuron = nextLayer.neurons[i];
-                derivativeCost += nextLayer.GetWeight(i, layerRow).weight * neuron.derivativeActivation * neuron.derivativeCost;
+                derivativeCost += nextLayer.GetWeight(i, layerRow).weight * neuron.DerivativeActivation * neuron.DerivativeCost;
             }
             derivativeCost /= nextLayer.neurons.Length;
 
-            gradientDecent.Add(derivativeActivation * derivativeCost, this);
+            SetBackPropCache(derivativeCost);
+            gradientDecent.Add(DerivativeActivation * DerivativeCost, this);
         }
 
         /// <summary>
@@ -121,6 +125,44 @@ namespace NeuralNetworks
             bias -= learningRate * step;
         }
 
+        private void SetBackPropCache(double derivativeCost)
+        {
+            backpropCache = new ThreadLocal<BackpropCache>
+            {
+                Value = new BackpropCache(derivativeCost)
+            };
+        }
+
         #endregion
     }
+
+    /// <summary>
+    /// Cache used by the Neuron class
+    /// </summary>
+    public struct BackpropCache
+    {
+        public double derivativeCost;
+
+        public BackpropCache(double derivativeCost)
+        {
+            this.derivativeCost = derivativeCost;
+        }
+    }
+
+    /// <summary>
+    /// Feedforward cache values
+    /// </summary>
+    public struct FeedforwardCache
+    {
+        public double activation;
+        public double derivativeActivation;
+
+        public FeedforwardCache(double activation, double derivativeActivation)
+        {
+            this.activation = activation;
+            this.derivativeActivation = derivativeActivation;
+        }
+    }
+
+
 }

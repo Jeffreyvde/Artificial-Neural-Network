@@ -37,7 +37,7 @@ namespace NeuralNetworks
             Vector<double> values = Vector<double>.Build.Dense(neurons.Length);
             for (int i = 0; i < neurons.Length; i++)
             {
-                values[i] = activationVector ? neurons[i].activation : neurons[i].bias;
+                values[i] = activationVector ? neurons[i].Activation : neurons[i].bias;
             }
             return values;
         }

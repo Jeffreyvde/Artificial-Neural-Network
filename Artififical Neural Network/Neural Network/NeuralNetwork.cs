@@ -68,7 +68,7 @@ namespace NeuralNetworks
 
             for (int i = 0; i < layer.neurons.Length; i++)
             {
-                layer.neurons[i].activation = input[i];
+                layer.neurons[i].Activation = input[i];
             }
         }
         #endregion
@@ -144,7 +144,7 @@ namespace NeuralNetworks
             double highestActivation = 0;
             for (int i = 0; i < lastLayer.neurons.Length; i++)
             {
-                double activation = lastLayer.neurons[i].activation;
+                double activation = lastLayer.neurons[i].Activation;
                 if (highestActivation < activation)
                 {
                     guess = i;

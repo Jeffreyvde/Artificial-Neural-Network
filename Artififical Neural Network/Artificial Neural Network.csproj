@@ -55,8 +55,8 @@
     <Compile Include="Mnist\ImageTrainingSet.cs" />
     <Compile Include="Mnist\MNIST.cs" />
     <Compile Include="Neural Network\Activation\Activation.cs" />
-    <Compile Include="Neural Network\Backpropogation\Batches\Batch.cs" />
-    <Compile Include="Neural Network\Backpropogation\Batches\TrainingManager.cs" />
+    <Compile Include="Neural Network\Training\Batch.cs" />
+    <Compile Include="Neural Network\Training\TrainingManager.cs" />
     <Compile Include="Neural Network\Backpropogation\GradientDecentValue.cs" />
     <Compile Include="Neural Network\Backpropogation\GradientDescent.cs" />
     <Compile Include="Neural Network\Backpropogation\IBackpropogatable.cs" />
@@ -76,8 +76,6 @@
     <None Include="App.config" />
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Neural Network\Batches\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

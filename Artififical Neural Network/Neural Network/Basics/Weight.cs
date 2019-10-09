@@ -35,7 +35,7 @@ namespace NeuralNetworks
         /// <returns></returns>
         public void BackPropogate(GradientDescent gradient)
         {
-            double value = connection.startNeuron.activation * connection.endNeuron.derivativeActivation * connection.endNeuron.derivativeCost;
+            double value = connection.startNeuron.Activation * connection.endNeuron.DerivativeActivation * connection.endNeuron.DerivativeCost;
             gradient.Add(value, this);
         }
         
