@@ -23,7 +23,7 @@
         /// Run a neural network on batch
         /// </summary>
         /// <param name="network"></param>
-        public void Run(NeuralNetwork network, double learningRate)
+        public GradientDescent Run(NeuralNetwork network, double learningRate)
         {
             network.FeedForward(data[0]);
             GradientDescent gradientDescent = network.Backpropogate(data[0]);
@@ -35,7 +35,7 @@
                 gradientDescent += network.Backpropogate(training);
             }
             gradientDescent /= data.Length - 1;
-            gradientDescent.Apply(learningRate / data[0].inputData.Length);
+            return gradientDescent;
         }
     }
 }
