@@ -52,6 +52,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Mnist\BigEndianUtils.cs" />
+    <Compile Include="Mnist\ImageTrainingSet.cs" />
     <Compile Include="Mnist\MNIST.cs" />
     <Compile Include="Neural Network\Activation\Activation.cs" />
     <Compile Include="Neural Network\Backpropogation\Batches\Batch.cs" />

@@ -10,6 +10,11 @@ namespace MNIST
         private readonly int numRows, numCols;
         public readonly TrainingData[] trainingData;
 
+        /// <summary>
+        /// Create a labelled trianing set
+        /// </summary>
+        /// <param name="labels"></param>
+        /// <param name="images"></param>
         public MnistDataSet(string labels, string images)
         {
             FileStream fsLabels = new FileStream(labels, FileMode.Open);
@@ -38,6 +43,11 @@ namespace MNIST
             brLabels.Close();
         }
 
+        /// <summary>
+        /// Discard a couple of bytes
+        /// </summary>
+        /// <param name="binaryReader"></param>
+        /// <param name="times"></param>
         private void Discard(BinaryReader binaryReader, int times = 1)
         {
             for (int i = 0; i < times; i++)

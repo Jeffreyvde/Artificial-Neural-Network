@@ -10,7 +10,6 @@ namespace NeuralNetworks
         public Weight[,] weights;
         private int weightRows, weightColumns;
 
-
         public readonly Neuron[] neurons;
 
         #region Initialization

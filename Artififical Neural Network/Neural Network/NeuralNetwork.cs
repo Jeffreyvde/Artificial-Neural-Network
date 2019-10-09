@@ -5,10 +5,15 @@ using Newtonsoft.Json;
 
 namespace NeuralNetworks
 {
+    /// <summary>
+    /// Class to train a neural networks and use it
+    /// </summary>
     public struct NeuralNetwork
     {
         public Layer[] layers;
         public static IActivation activation;
+
+        #region Initialization
 
         /// <summary>
         /// Create a neural network structure. The size include the input and output layers.
@@ -34,35 +39,6 @@ namespace NeuralNetworks
         public NeuralNetwork(Layer[] layers)
         {
             this.layers = layers;
-        }
-
-        /// <summary>
-        /// Train the neural network
-        /// </summary>
-        public void FeedForward(TrainingData trainingData)
-        {
-            SetInputLayer(trainingData.inputData);
-
-            for (int i = 1; i < layers.Length; i++)
-            {
-                layers[i].FeedForward(layers[i - 1].neurons);
-            }
-        }
-
-        /// <summary>
-        /// Backpropogate neural network
-        /// </summary>
-        /// <param name="trainingData"></param>
-        public GradientDescent Backpropogate(TrainingData trainingData)
-        {
-            GradientDescent gradient = new GradientDescent();
-            layers[layers.Length - 1].BackPropogate(trainingData.correctOutputNeuron, gradient);
-
-            for (int i = layers.Length - 2; i > 0; i--)
-            {
-                layers[i].BackPropogate(layers[i + 1], gradient);
-            }
-            return gradient;
         }
 
         /// <summary>
@@ -95,7 +71,45 @@ namespace NeuralNetworks
                 layer.neurons[i].activation = input[i];
             }
         }
+        #endregion
+        #region Feedforward
+        /// <summary>
+        /// Train the neural network
+        /// </summary>
+        public void FeedForward(TrainingData trainingData)
+        {
+            SetInputLayer(trainingData.inputData);
 
+            for (int i = 1; i < layers.Length; i++)
+            {
+                layers[i].FeedForward(layers[i - 1].neurons);
+            }
+        }
+        #endregion
+        #region Backpropogation
+
+
+        /// <summary>
+        /// Backpropogate neural network
+        /// </summary>
+        /// <param name="trainingData"></param>
+        public GradientDescent Backpropogate(TrainingData trainingData)
+        {
+            GradientDescent gradient = new GradientDescent();
+            layers[layers.Length - 1].BackPropogate(trainingData.correctOutputNeuron, gradient);
+
+            for (int i = layers.Length - 2; i > 0; i--)
+            {
+                layers[i].BackPropogate(layers[i + 1], gradient);
+            }
+            return gradient;
+        }
+
+        /// <summary>
+        /// Calculate the cost
+        /// </summary>
+        /// <param name="correctOuput"></param>
+        /// <returns></returns>
         public double CalculateCost(int correctOuput)
         {
             Layer lastLayer = layers[layers.Length - 1];
@@ -108,7 +122,21 @@ namespace NeuralNetworks
             return cost / lastLayer.neurons.Length;
         }
 
+        /// <summary>
+        /// Is neural network correct
+        /// </summary>
+        /// <param name="correctOutput"></param>
+        /// <returns></returns>
         public bool IsNeuralNetworkCorrect(int correctOutput)
+        {
+            return GetNetworkGuess() == correctOutput;
+        }
+
+        /// <summary>
+        /// Get the network guess 
+        /// </summary>
+        /// <returns></returns>
+        public int GetNetworkGuess()
         {
             Layer lastLayer = layers[layers.Length - 1];
 
@@ -123,10 +151,15 @@ namespace NeuralNetworks
                     highestActivation = activation;
                 }
             }
-            return guess == correctOutput;
+            return guess;
         }
+        #endregion
+        #region IO
 
-
+        /// <summary>
+        /// Save the neural network to a specifc path
+        /// </summary>
+        /// <param name="path"></param>
         public void Save(string path)
         {
             if (File.Exists(path))
@@ -135,12 +168,17 @@ namespace NeuralNetworks
             }
             using (FileStream fs = File.Create(path))
             {
-                Byte[] info = new UTF8Encoding(true).GetBytes(JsonConvert.SerializeObject(this, new JsonSerializerSettings { PreserveReferencesHandling = PreserveReferencesHandling.Objects }));
-                // Add some information to the file.
+                byte[] info = new UTF8Encoding(true).GetBytes(JsonConvert.SerializeObject(this, new JsonSerializerSettings { PreserveReferencesHandling = PreserveReferencesHandling.Objects }));
                 fs.Write(info, 0, info.Length);
             }
         }
 
+        /// <summary>
+        /// Load a neural network from a file
+        /// </summary>
+        /// <param name="path"></param>
+        /// <param name="activation"></param>
+        /// <returns></returns>
         public static NeuralNetwork Load(string path, IActivation activation)
         {
             using (StreamReader r = new StreamReader(path))
@@ -151,5 +189,7 @@ namespace NeuralNetworks
                 return value;
             }
         }
+
+        #endregion
     }
 }
