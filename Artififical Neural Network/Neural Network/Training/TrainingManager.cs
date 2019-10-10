@@ -8,12 +8,11 @@ namespace NeuralNetworks
 {
     public class TrainingManager
     {
-        private Batch[,] batches;
-        private readonly TrainingData[] data;
+        private readonly TrainingData[] trainingData;
+        private readonly Batch[,] batches;
         private readonly int iterations, batchesPerIterations, batchSize, iterationSize;
 
-
-        private TrainingData[] testData;
+        private readonly TrainingData[] testData;
         private NeuralNetwork neuralNetwork;
 
         private readonly double learningRate;
@@ -28,7 +27,7 @@ namespace NeuralNetworks
         {
             batches = new Batch[iterations, batchesPerIterations];
 
-            this.data = data;
+            trainingData = data;
             this.batchesPerIterations = batchesPerIterations;
             this.iterations = iterations;
             this.learningRate = learningRate;
@@ -36,12 +35,10 @@ namespace NeuralNetworks
             this.batchSize = batchSize;
 
             iterationSize = batchesPerIterations * data[0].inputData.Length;
-
-            GenerateBatches();
             this.neuralNetwork = neuralNetwork;
         }
 
-        
+
         /// <summary>
         /// Generate new batches 
         /// </summary>
@@ -51,7 +48,7 @@ namespace NeuralNetworks
             {
                 for (int j = 0; j < batchesPerIterations; j++)
                 {
-                    batches[i, j] = new Batch(data, batchSize);
+                    batches[i, j] = new Batch(trainingData, batchSize);
                 }
             }
         }
@@ -103,16 +100,22 @@ namespace NeuralNetworks
         /// </summary>
         private float Test()
         {
+            Task[] tasks = new Task[testData.Length];
             float correctThings = 0;
             for (int i = 0; i < testData.Length; i++)
             {
                 TrainingData training = testData[i];
-                neuralNetwork.FeedForward(training);
-                if (neuralNetwork.IsNeuralNetworkCorrect(training.correctOutputNeuron))
+                Task task = Task.Run(() =>
                 {
-                    correctThings++;
-                }
+                    neuralNetwork.FeedForward(training);
+                    if (neuralNetwork.IsNeuralNetworkCorrect(training.correctOutputNeuron))
+                    {
+                        correctThings++;
+                    }
+                });
+                tasks[i] = task;
             }
+            Task.WaitAll(tasks);
             float percentage = correctThings / testData.Length * 100f;
             Console.WriteLine("Network Percentage: " + percentage);
             return percentage;
