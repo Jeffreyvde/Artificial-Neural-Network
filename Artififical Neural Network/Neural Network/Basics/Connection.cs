@@ -4,8 +4,8 @@ namespace NeuralNetwork.Neurons
 {
     public class Connection
     {
-        public Neuron StartNeuron { get; private set; }
-        public Neuron EndNeuron { get; private set; }
+        public BaseNeuron StartNeuron { get; private set; }
+        public BaseNeuron EndNeuron { get; private set; }
 
         public double Weight { get { return weight.weight; } }
 
@@ -16,7 +16,7 @@ namespace NeuralNetwork.Neurons
         /// </summary>
         /// <param name="startNeuron"></param>
         /// <param name="endNeuron"></param>
-        public Connection(Neuron startNeuron, Neuron endNeuron)
+        public Connection(BaseNeuron startNeuron, BaseNeuron endNeuron)
         {
             StartNeuron = startNeuron;
             EndNeuron = endNeuron;
