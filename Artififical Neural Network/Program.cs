@@ -1,8 +1,6 @@
 ﻿using System;
-using System.IO;
-using NeuralNetworks;
 
-namespace Artififical_Neural_Network
+namespace NeuralNetwork
 {
     class Program
     {
@@ -26,7 +24,7 @@ namespace Artififical_Neural_Network
             ///TrainingManager manager = new TrainingManager(40, dataset.trainingData, testing.trainingData, 10, 10, network, 5);
            // manager.Train();
 
-            network = NeuralNetwork.Load("D:/Code/C#/Artificial Neural Networks/TestResults/Test.txt", new Sigmoid());
+            network = NeuralNetwork.NeuralNetwork.Load("D:/Code/C#/Artificial Neural Networks/TestResults/Test.txt", new Sigmoid());
             Test();
 
 

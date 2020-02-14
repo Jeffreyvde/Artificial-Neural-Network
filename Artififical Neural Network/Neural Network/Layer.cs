@@ -1,7 +1,7 @@
 ﻿using Newtonsoft.Json;
 using MathNet.Numerics.LinearAlgebra;
 
-namespace NeuralNetworks
+namespace NeuralNetwork
 {
     public class Layer
     {

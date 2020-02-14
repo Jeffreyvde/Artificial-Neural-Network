@@ -1,7 +1,7 @@
 ﻿using MathNet.Numerics.LinearAlgebra;
 using MathNet.Numerics.LinearAlgebra.Double;
 
-namespace NeuralNetworks
+namespace NeuralNetwork
 {
     public static class Converter
     {

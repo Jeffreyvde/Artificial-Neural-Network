@@ -1,12 +1,12 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using NeuralNetworks;
+using NeuralNetwork;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace NeuralNetworks.Tests
+namespace NeuralNetwork.Tests
 {
     [TestClass()]
     public class NeuralNetworkTests

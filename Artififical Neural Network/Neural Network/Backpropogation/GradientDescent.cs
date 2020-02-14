@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace NeuralNetworks
+namespace NeuralNetwork
 {
     public class GradientDescent
     {

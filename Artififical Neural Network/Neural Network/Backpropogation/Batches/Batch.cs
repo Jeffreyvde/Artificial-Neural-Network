@@ -1,4 +1,4 @@
-﻿namespace NeuralNetworks
+﻿namespace NeuralNetwork
 {
     public class Batch
     {

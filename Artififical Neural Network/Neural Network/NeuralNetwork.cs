@@ -3,7 +3,7 @@ using System.IO;
 using System.Text;
 using Newtonsoft.Json;
 
-namespace NeuralNetworks
+namespace NeuralNetwork
 {
     public struct NeuralNetwork
     {
