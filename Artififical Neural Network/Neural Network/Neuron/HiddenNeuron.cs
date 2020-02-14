@@ -17,7 +17,7 @@
             Neuron nextNeuron;
             for (int i = 0; i < ForwardConnections.Length; i++)
             {
-                nextNeuron = ForwardConnections[i].EndNeuron;
+                nextNeuron = (Neuron)ForwardConnections[i].EndNeuron;
                 DerivativeCost += ForwardConnections[i].Weight * nextNeuron.DerivativeActivation * nextNeuron.DerivativeActivation;
             }
             DerivativeCost /= ForwardConnections.Length;
