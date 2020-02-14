@@ -51,6 +51,33 @@ namespace NeuralNetwork.Neurons
         }
 
         /// <summary>
+        /// Generate the connections for this neuron
+        /// </summary>
+        /// <param name="nextlayer"></param>
+        /// <param name="previousLayer"></param>
+        public void EstablishConnections(BaseNeuron[] nextlayer, BaseNeuron[] previousLayer)
+        {
+            if (nextlayer == null) ForwardConnections = null;
+            else
+            {
+                ForwardConnections = new Connection[nextlayer.Length];
+                for (int i = 0; i < nextlayer.Length; i++)
+                {
+                    ForwardConnections[i] = new Connection(this, nextlayer[i]);
+                }
+            }
+            if (previousLayer == null) BackwardsConnections = null;
+            else
+            {
+                BackwardsConnections = new Connection[previousLayer.Length];
+                for (int i = 0; i < BackwardsConnections.Length; i++)
+                {
+                    ForwardConnections[i] = new Connection(previousLayer[i], this);
+                }
+            }
+        }
+
+        /// <summary>
         /// Feedforward the Neuron
         /// </summary>
         public abstract void FeedForward();
