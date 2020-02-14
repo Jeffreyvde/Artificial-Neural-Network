@@ -1,44 +1,37 @@
 ﻿using Newtonsoft.Json;
+using NeuralNetwork.Neurons;
 
-namespace NeuralNetworks
+namespace NeuralNetwork
 {
     public class Weight : IBackpropogatable
     {
-        public readonly int layerIndex;
-        public double weight;
-
-        public Connection connection;
+        public double weight { get; private set; }
 
         /// <summary>
         /// Constructor for Weight class. That generates random weight between -1 and 1.
         /// </summary>
         /// <param name="layerIndex"></param>
-        public Weight(int layerIndex, Neuron startNeuron, Neuron endNeuron)
+        public Weight()
         {
-            this.layerIndex = layerIndex;
-
             weight = Randomizer.Range(-1, 1);
-            connection = new Connection(startNeuron, endNeuron);
         }
 
         [JsonConstructor]
-        public Weight(int layerIndex, Connection connection, double weight)
+        public Weight(double weight)
         {
-            this.layerIndex = layerIndex;
             this.weight = weight;
-            this.connection = connection;
         }
 
         /// <summary>
         /// Back propogate the weight
         /// </summary>
         /// <returns></returns>
-        public void BackPropogate(GradientDescent gradient)
+        public void BackPropogate(Connection connection, GradientDescent gradient)
         {
-            double value = connection.startNeuron.activation * connection.endNeuron.derivativeActivation * connection.endNeuron.derivativeCost;
+            double value = connection.StartNeuron.Activation * connection.EndNeuron.DerivativeActivation * connection.EndNeuron.derivativeCost;
             gradient.Add(value, this);
         }
-        
+
         /// <summary>
         /// Apply the gradient decent step
         /// </summary>
