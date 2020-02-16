@@ -2,7 +2,7 @@
 
 namespace NeuralNetwork.Layers
 {
-    public class OutputLayer : Layer<OutPutNeuron>
+    public class OutputLayer : Layer
     {
         /// <summary>
         /// Initialises the Layer with Hidden neurons
@@ -29,7 +29,7 @@ namespace NeuralNetwork.Layers
 
             for (int i = 0; i < Neurons.Length; i++)
             {
-                Neurons[i].SetOutput(correctOutput[i]);
+                ((OutPutNeuron)Neurons[i]).SetOutput(correctOutput[i]);
             }
         }
     }

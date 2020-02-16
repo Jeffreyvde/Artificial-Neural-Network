@@ -32,7 +32,6 @@
                 }
             }
             SetInput(startData);
-            inputType = typeof(double[,]);
         }
     }
 }

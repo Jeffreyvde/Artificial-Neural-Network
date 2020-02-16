@@ -3,9 +3,9 @@ using NeuralNetwork.Neurons;
 
 namespace NeuralNetwork.Layers
 {
-    public abstract class Layer<T> where T : BaseNeuron
+    public abstract class Layer
     {
-        public T[] Neurons { get; protected set; }
+        public BaseNeuron[] Neurons { get; protected set; }
 
         /// <summary>
         /// Default constructor for layers
@@ -14,7 +14,7 @@ namespace NeuralNetwork.Layers
 
         #region Initialization
         [JsonConstructor()]
-        public Layer(T[] neurons)
+        public Layer(BaseNeuron[] neurons)
         {
             Neurons = neurons;
         }

@@ -5,7 +5,7 @@ namespace NeuralNetwork.Layers
     /// <summary>
     /// Dense layer the basic building block for a Neural Network
     /// </summary>
-    public class DenseLayer : Layer<HiddenNeuron>
+    public class DenseLayer : Layer
     {
         /// <summary>
         /// Initialises the Layer with Hidden neurons
