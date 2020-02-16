@@ -40,18 +40,6 @@ namespace NeuralNetwork.Neurons
             Bias = bias;
             ActivationFunction = activationFunction;
         }
-
-        /// <summary>
-        /// Set the required values of this neuron
-        /// </summary>
-        /// <param name="weightedSum"></param>
-        /// <param name="activation"></param>
-        public void SetValues(double weightedSum, double activation)
-        {
-            Activation = activation;
-            DerivativeActivation = NeuralNetwork.activation.CalculateDerivativeActivation(weightedSum);
-        }
-
         #endregion
         #region FeedForward
 
@@ -60,7 +48,9 @@ namespace NeuralNetwork.Neurons
         /// </summary>
         public override void FeedForward()
         {
-            throw new NotImplementedException();
+            double weightedSum = Converter.GetWeights(BackwardsConnections) * Converter.GetStartActivations(BackwardsConnections) * Bias;
+            Activation = ActivationFunction.CalculateActivation(weightedSum);
+            DerivativeActivation = ActivationFunction.CalculateDerivativeActivation(weightedSum);
         }
 
         #endregion

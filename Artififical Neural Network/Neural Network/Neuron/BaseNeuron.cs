@@ -72,7 +72,7 @@ namespace NeuralNetwork.Neurons
                 BackwardsConnections = new Connection[previousLayer.Length];
                 for (int i = 0; i < BackwardsConnections.Length; i++)
                 {
-                    ForwardConnections[i] = new Connection(previousLayer[i], this);
+                    BackwardsConnections[i] = new Connection(previousLayer[i], this);
                 }
             }
         }

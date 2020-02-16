@@ -56,7 +56,7 @@
     <Otherwise />
   </Choose>
   <ItemGroup>
-    <Compile Include="Neural Network\NeuralNetworkTests.cs" />
+    <Compile Include="Neural Network\NeuronTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
