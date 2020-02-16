@@ -20,6 +20,5 @@ namespace NeuralNetwork.Layers
                 Neurons[i] = new HiddenNeuron(activatFunction);
             }
         }
-
     }
 }
