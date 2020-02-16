@@ -89,7 +89,7 @@ namespace NeuralNetwork.Neurons
         {
             for (int i = 0; i < ForwardConnections.Length; i++)
             {
-                ForwardConnections[i].BackPropogate();
+                ForwardConnections[i].BackPropogate(descent);
             }
         }
     }

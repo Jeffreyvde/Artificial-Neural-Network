@@ -38,9 +38,9 @@ namespace NeuralNetwork.Neurons
             this.weight = weight;
         }
 
-        public void BackPropogate()
+        public void BackPropogate(GradientDescent descent)
         {
-            throw new System.NotImplementedException();
+            weight.BackPropogate(this, descent);
         }
     }
 }
