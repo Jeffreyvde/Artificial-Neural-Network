@@ -1,5 +1,6 @@
 ﻿using MathNet.Numerics.LinearAlgebra;
 using MathNet.Numerics.LinearAlgebra.Double;
+using NeuralNetwork.Neurons;
 
 namespace NeuralNetwork
 {
@@ -12,17 +13,14 @@ namespace NeuralNetwork
         /// <param name="rows"></param>
         /// <param name="layers"></param>
         /// <returns></returns>
-        public static Matrix<double> ConvertToMatrix(Weight[,] weights, int rows, int layers)
+        public static Vector<double> GetWeights(Connection[] neurons)
         {
-            double[,] weightValues = new double[rows, layers];
-            for (int i = 0; i < rows; i++)
+            Vector<double> values = Vector<double>.Build.Dense(neurons.Length);
+            for (int i = 0; i < neurons.Length; i++)
             {
-                for (int j = 0; j < layers; j++)
-                {
-                    weightValues[i, j] = weights[i, j].weight;
-                }
+                values[i] = neurons[i].StartNeuron.Activation;
             }
-            return DenseMatrix.OfArray(weightValues);
+            return values;
         }
 
         /// <summary>
@@ -32,12 +30,12 @@ namespace NeuralNetwork
         /// <param name="rows"></param>
         /// <param name="layers"></param>
         /// <returns></returns>
-        public static Vector<double> ConvertToVector(Neuron[] neurons, bool activationVector)
+        public static Vector<double> GetStartActivations(Connection[] neurons)
         {
             Vector<double> values = Vector<double>.Build.Dense(neurons.Length);
             for (int i = 0; i < neurons.Length; i++)
             {
-                values[i] = activationVector ? neurons[i].activation : neurons[i].bias;
+                values[i] = neurons[i].StartNeuron.Activation;
             }
             return values;
         }
