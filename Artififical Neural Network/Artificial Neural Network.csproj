@@ -68,7 +68,7 @@
     <Compile Include="Neural Network\Backpropogation\IBackpropogatable.cs" />
     <Compile Include="Neural Network\Basics\Connection.cs" />
     <Compile Include="Neural Network\Layers\HiddenLayer.cs" />
-    <Compile Include="Neural Network\Layers\Input2D.cs" />
+    <Compile Include="Neural Network\Layers\Input2DLayer.cs" />
     <Compile Include="Neural Network\Layers\InputLayer.cs" />
     <Compile Include="Neural Network\Neuron\BaseNeuron.cs" />
     <Compile Include="Neural Network\Neuron\HiddenNeuron.cs" />
