@@ -2,131 +2,81 @@
 using System.IO;
 using System.Text;
 using Newtonsoft.Json;
+using NeuralNetwork.Layers;
+using NeuralNetwork.Neurons;
+using System.Collections.Generic;
 
 namespace NeuralNetwork
 {
-    public struct NeuralNetwork
+    public class NeuralNetwork
     {
-        public Layer[] layers;
-        public static IActivation activation;
+        public InputLayer Input { get; private set; }
+        public OutputLayer Output { get; private set; }
+        public Layer[] Hidden { get; private set; }
 
         /// <summary>
-        /// Create a neural network structure. The size include the input and output layers.
+        /// Constructor for the Neural Network
         /// </summary>
-        /// <param name="layerSizes">sizes of each layer</param>
-        public NeuralNetwork(IActivation activation, params int[] layerSizes)
+        public NeuralNetwork(InputLayer input, OutputLayer output, params Layer[] hidden)
         {
-            if (layerSizes.Length <= 2) throw new System.Exception("Neural network can not be smaller than 3 layers.");
+            this.Input = input;
+            this.Output = output;
+            this.Hidden = hidden;
 
-            NeuralNetwork.activation = activation;
-
-            layers = new Layer[layerSizes.Length];
-
-            CreateNewLayer(0, layerSizes[0], null);
-
-            for (int i = 1; i < layerSizes.Length; i++)
+            List<Layer> layers = new List<Layer>
             {
-                CreateNewLayer(i, layerSizes[i], layers[i - 1].neurons);
+                input
+            };
+            for (int i = 0; i < hidden.Length; i++)
+            {
+                layers.Add(hidden[i]);
             }
-        }
+            layers.Add(output);
 
-        [JsonConstructor()]
-        public NeuralNetwork(Layer[] layers)
-        {
-            this.layers = layers;
+            for (int i = 0; i < layers.Count; i++)
+            {
+                if (i == 0)
+                    layers[i].ConnectNeurons(layers[i + 1].Neurons, null);
+                else if (i == layers.Count - 1)
+                    layers[i].ConnectNeurons(null, layers[i - 1].Neurons);
+                else layers[i].ConnectNeurons(layers[i - 1].Neurons, layers[i + 1].Neurons);
+            }
         }
 
         /// <summary>
         /// Train the neural network
         /// </summary>
-        public void FeedForward(TrainingData trainingData)
+        public void FeedForward(double[] trainingData)
         {
-            SetInputLayer(trainingData.inputData);
-
-            for (int i = 1; i < layers.Length; i++)
+            Input.SetInput(trainingData);
+            for (int i = 1; i < Hidden.Length; i++)
             {
-                layers[i].FeedForward(layers[i - 1].neurons);
+                Hidden[i].FeedForward();
             }
+            Output.FeedForward();
         }
 
         /// <summary>
         /// Backpropogate neural network
         /// </summary>
         /// <param name="trainingData"></param>
-        public GradientDescent Backpropogate(TrainingData trainingData)
+        public GradientDescent Backpropogate(double[] correctOuput)
         {
             GradientDescent gradient = new GradientDescent();
-            layers[layers.Length - 1].BackPropogate(trainingData.correctOutputNeuron, gradient);
-
-            for (int i = layers.Length - 2; i > 0; i--)
+            Output.SetOutput(correctOuput);
+            Output.BackPropogate(gradient);
+            for (int i = Hidden.Length; i > 0; i--)
             {
-                layers[i].BackPropogate(layers[i + 1], gradient);
+                Hidden[i].BackPropogate(gradient);
             }
+            Input.BackPropogate(gradient);
             return gradient;
         }
 
         /// <summary>
-        /// Create a new layer in the neural network
+        /// Save neural network TODO Fix
         /// </summary>
-        /// <param name="index">What is the index of this new layer</param>
-        /// <param name="size">What is the size of this new layer</param>
-        /// <param name="random">Random as optimilization</param>
-        /// <param name="previousNeurons">Optional previous neurons</param>
-        private void CreateNewLayer(int index, int size, Neuron[] previousNeurons)
-        {
-            Layer layer = new Layer(index, size);
-            layers[index] = layer;
-            if (previousNeurons != null)
-                layer.GenerateWeights(previousNeurons);
-        }
-
-        /// <summary>
-        /// Initialize the input layer
-        /// </summary>
-        /// <param name="input"></param>
-        private void SetInputLayer(double[] input)
-        {
-            Layer layer = layers[0];
-
-            if (input.Length != layer.neurons.Length) throw new Exception("Input not equal to neurons lenght");
-
-            for (int i = 0; i < layer.neurons.Length; i++)
-            {
-                layer.neurons[i].activation = input[i];
-            }
-        }
-
-        public double CalculateCost(int correctOuput)
-        {
-            Layer lastLayer = layers[layers.Length - 1];
-
-            double cost = 0;
-            for (int i = 0; i < lastLayer.neurons.Length; i++)
-            {
-                cost += lastLayer.neurons[i].CalculateCost(correctOuput);
-            }
-            return cost / lastLayer.neurons.Length;
-        }
-
-        public bool IsNeuralNetworkCorrect(int correctOutput)
-        {
-            Layer lastLayer = layers[layers.Length - 1];
-
-            int guess = 0;
-            double highestActivation = 0;
-            for (int i = 0; i < lastLayer.neurons.Length; i++)
-            {
-                double activation = lastLayer.neurons[i].activation;
-                if (highestActivation < activation)
-                {
-                    guess = i;
-                    highestActivation = activation;
-                }
-            }
-            return guess == correctOutput;
-        }
-
-
+        /// <param name="path"></param>
         public void Save(string path)
         {
             if (File.Exists(path))
@@ -141,13 +91,17 @@ namespace NeuralNetwork
             }
         }
 
-        public static NeuralNetwork Load(string path, IActivation activation)
+        /// <summary>
+        /// Load Neural Network TODO Fix
+        /// </summary>
+        /// <param name="path"></param>
+        /// <returns></returns>
+        public static NeuralNetwork Load(string path)
         {
             using (StreamReader r = new StreamReader(path))
             {
                 string json = r.ReadToEnd();
                 NeuralNetwork value = JsonConvert.DeserializeObject<NeuralNetwork>(json);
-                NeuralNetwork.activation = activation;
                 return value;
             }
         }
