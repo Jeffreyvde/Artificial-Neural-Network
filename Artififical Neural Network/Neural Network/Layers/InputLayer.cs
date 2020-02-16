@@ -4,6 +4,9 @@ namespace NeuralNetwork.Layers
 {
     public class InputLayer : Layer<InputNeuron>
     {
+
+        public System.Type inputType;
+
         /// <summary>
         /// Initialize from size
         /// </summary>
@@ -25,7 +28,8 @@ namespace NeuralNetwork.Layers
         /// <param name="activationFunction"></param>
         public InputLayer(double[] startData)
         {
-            //TODO check null
+            if (startData == null) throw new System.NullReferenceException("Startdata can not be null: please check Input layer constructor");
+
             Neurons = new InputNeuron[startData.Length];
             for (int i = 0; i < Neurons.Length; i++)
             {
@@ -33,9 +37,16 @@ namespace NeuralNetwork.Layers
             }
         }
 
+        /// <summary>
+        /// Set the input data for the input neurons
+        /// </summary>
+        /// <param name="startData"></param>
         public void SetInput(double[] startData)
         {
-            //TODO check null and check size is equal to neurons length
+            inputType = typeof(double[]);
+            if (startData == null) throw new System.NullReferenceException("Startdata can not be null: please check Input layer's SetInput function");
+            else if (startData.Length != Neurons.Length) throw new System.ArgumentException("Startdata can not be a different length from the Neurons of this layer: Please check input data or layer initialization.");
+ 
             for (int i = 0; i < Neurons.Length; i++)
             {
                 Neurons[i].SetActivation(startData[i]);

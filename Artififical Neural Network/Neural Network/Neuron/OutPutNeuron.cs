@@ -5,7 +5,7 @@ namespace NeuralNetwork.Neurons
 {
     public class OutPutNeuron : Neuron
     {
-        [JsonIgnore] private float correctOuput = float.MinValue;
+        [JsonIgnore] private double correctOuput = float.MinValue;
 
         /// <summary>
         /// Default constructor
@@ -25,7 +25,7 @@ namespace NeuralNetwork.Neurons
         /// Set the test data 
         /// </summary>
         /// <param name="testData"></param>
-        public void SetTestData(float correctOuput)
+        public void SetOutput(double correctOuput)
         {
             this.correctOuput = correctOuput;
         }
