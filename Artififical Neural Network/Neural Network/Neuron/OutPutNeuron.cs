@@ -14,14 +14,6 @@ namespace NeuralNetwork.Neurons
         public OutPutNeuron(IActivation activationFunction) : base(activationFunction) { }
 
         /// <summary>
-        /// Feedforward the output neuron. This calculates its Activation.
-        /// </summary>
-        public override void FeedForward()
-        {
-            throw new System.NotImplementedException();
-        }
-
-        /// <summary>
         /// Set the test data 
         /// </summary>
         /// <param name="testData"></param>

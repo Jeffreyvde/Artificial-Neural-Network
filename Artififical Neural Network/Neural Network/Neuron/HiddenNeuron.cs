@@ -21,6 +21,7 @@
                 DerivativeCost += ForwardConnections[i].Weight * nextNeuron.DerivativeActivation * nextNeuron.DerivativeActivation;
             }
             DerivativeCost /= ForwardConnections.Length;
+            base.BackPropogate(descent);
 
             descent.Add(DerivativeActivation * DerivativeCost, this);
         }

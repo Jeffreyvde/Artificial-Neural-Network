@@ -40,17 +40,6 @@ namespace NeuralNetwork.Neurons
         }
 
         /// <summary>
-        /// Set the connection for this neuron
-        /// </summary>
-        /// <param name="forward"></param>
-        /// <param name="backwards"></param>
-        public void SetConnections(Connection[] forward, Connection[] backwards)
-        {
-            ForwardConnections = forward;
-            BackwardsConnections = backwards;
-        }
-
-        /// <summary>
         /// Generate the connections for this neuron
         /// </summary>
         /// <param name="nextlayer"></param>
