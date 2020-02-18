@@ -40,7 +40,7 @@ namespace NeuralNetwork.Layers
         /// <param name="startData"></param>
         public void SetInput(double[] startData)
         {
-            if (startData == null) throw new System.NullReferenceException("Startdata can not be null: please check Input layer's SetInput function");
+            if (startData == null) throw new System.ArgumentException("Startdata can not be null: please check Input layer's SetInput function");
             else if (startData.Length != Neurons.Length) throw new System.ArgumentException("Startdata can not be a different length from the Neurons of this layer: Please check input data or layer initialization.");
  
             for (int i = 0; i < Neurons.Length; i++)
