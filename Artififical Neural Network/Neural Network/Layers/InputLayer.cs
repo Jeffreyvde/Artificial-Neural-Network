@@ -25,7 +25,7 @@ namespace NeuralNetwork.Layers
         /// <param name="activationFunction"></param>
         public InputLayer(double[] startData)
         {
-            if (startData == null) throw new System.NullReferenceException("Startdata can not be null: please check Input layer constructor");
+            if (startData == null) throw new System.ArgumentNullException("Startdata can not be null: please check Input layer constructor");
 
             Neurons = new InputNeuron[startData.Length];
             for (int i = 0; i < Neurons.Length; i++)

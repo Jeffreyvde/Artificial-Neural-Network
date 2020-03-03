@@ -1,6 +1,8 @@
 ﻿using NeuralNetwork.Layers;
 using System.Collections.Generic;
 using NeuralNetwork.Backpropogation;
+using System.IO;
+using System.Runtime.Serialization.Formatters.Binary;
 
 namespace NeuralNetwork
 {
@@ -16,6 +18,8 @@ namespace NeuralNetwork
         /// </summary>
         public NeuralNetwork(InputLayer input, OutputLayer output, params Layer[] hidden)
         {
+            if (input == null || output == null) throw new System.ArgumentNullException("Input and output can not be null");
+
             this.Input = input;
             this.Output = output;
             this.Hidden = hidden;
@@ -76,19 +80,12 @@ namespace NeuralNetwork
         /// <param name="path"></param>
         public void Save(string path)
         {
-
-
-
-            //if (File.Exists(path))
-            //{
-            //    File.Delete(path);
-            //}
-            //using (FileStream fs = File.Create(path))
-            //{
-            //    Byte[] info = new UTF8Encoding(true).GetBytes(JsonConvert.SerializeObject(this, new JsonSerializerSettings { PreserveReferencesHandling = PreserveReferencesHandling.Objects }));
-            //    // Add some information to the file.
-            //    fs.Write(info, 0, info.Length);
-            //}
+            path = Combine(path);
+            BinaryFormatter formatter = new BinaryFormatter();
+            using (FileStream fileStream = File.Create(path))
+            {
+                formatter.Serialize(fileStream, this);
+            }
         }
 
         /// <summary>
@@ -98,13 +95,23 @@ namespace NeuralNetwork
         /// <returns></returns>
         public static NeuralNetwork Load(string path)
         {
-            //using (StreamReader r = new StreamReader(path))
-            //{
-            //    string json = r.ReadToEnd();
-            //    NeuralNetwork value = JsonConvert.DeserializeObject<NeuralNetwork>(json);
-            //    return value;
-            //}
-            return null;
+            path = Combine(path);
+            if (!File.Exists(path))
+                throw new System.ArgumentException("Path has no Neural Network");
+
+            BinaryFormatter formatter = new BinaryFormatter();
+
+            NeuralNetwork network;
+            using (FileStream fileStream = File.Open(path, FileMode.Open))
+            {
+                network = (NeuralNetwork)formatter.Deserialize(fileStream);
+            }
+            return network;
+        }
+
+        private static string Combine(string path)
+        {
+            return path + "Neural.Network";
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using NeuralNetwork.Neurons;
+using NeuralNetwork.Backpropogation;
 
 namespace NeuralNetwork.Layers
 {
