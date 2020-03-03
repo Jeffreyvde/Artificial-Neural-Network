@@ -1,16 +1,19 @@
-﻿using Newtonsoft.Json;
-using System;
+﻿using NeuralNetwork.Utilities;
 
 namespace NeuralNetwork.Neurons
 {
     public abstract class Neuron : BaseNeuron, IBackpropogatable
     {
+
         public double Bias { get; private set; }
         public IActivation ActivationFunction { get; protected set; }
 
         //Backpropogation
-        [JsonIgnore] public double DerivativeActivation { get; private set; }
-        [JsonIgnore] public double DerivativeCost { get; protected set; }
+        [System.NonSerialized] private double derivativeActivation;
+        [System.NonSerialized] private double derivativeCost;
+
+        public double DerivativeActivation { get => derivativeActivation; private set => derivativeActivation = value; }
+        public double DerivativeCost { get => derivativeCost; protected set => derivativeCost = value; }
 
         #region Initialization
 
@@ -23,22 +26,9 @@ namespace NeuralNetwork.Neurons
             ActivationFunction = activationFunction;
             do
             {
-                Bias = Randomizer.Range(-1, 1);
+                Bias = Random.Range(-1, 1);
             }
             while (Bias == 0);
-        }
-
-        /// <summary>
-        /// Json constructor
-        /// </summary>
-        /// <param name="layerIndex"></param>
-        /// <param name="layerRow"></param>
-        /// <param name="bias"></param>
-        [JsonConstructor()]
-        public Neuron(double bias, IActivation activationFunction, double activation, Connection[] forwardConnections, Connection[] backwardsConnections) : base(activation, forwardConnections, backwardsConnections)
-        {
-            Bias = bias;
-            ActivationFunction = activationFunction;
         }
         #endregion
         #region FeedForward

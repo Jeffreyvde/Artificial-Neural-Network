@@ -1,5 +1,5 @@
-﻿using Newtonsoft.Json;
-using NeuralNetwork.Neurons;
+﻿using NeuralNetwork.Neurons;
+using NeuralNetwork.Utilities;
 
 namespace NeuralNetwork
 {
@@ -13,13 +13,7 @@ namespace NeuralNetwork
         /// <param name="layerIndex"></param>
         public Weight()
         {
-            weight = Randomizer.Range(-1, 1);
-        }
-
-        [JsonConstructor]
-        public Weight(double weight)
-        {
-            this.weight = weight;
+            weight = Random.Range(-1, 1);
         }
 
         /// <summary>

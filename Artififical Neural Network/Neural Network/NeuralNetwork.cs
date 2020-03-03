@@ -1,9 +1,4 @@
-﻿using System;
-using System.IO;
-using System.Text;
-using Newtonsoft.Json;
-using NeuralNetwork.Layers;
-using NeuralNetwork.Utilities;
+﻿using NeuralNetwork.Layers;
 using System.Collections.Generic;
 
 namespace NeuralNetwork
@@ -79,16 +74,16 @@ namespace NeuralNetwork
         /// <param name="path"></param>
         public void Save(string path)
         {
-            if (File.Exists(path))
-            {
-                File.Delete(path);
-            }
-            using (FileStream fs = File.Create(path))
-            {
-                Byte[] info = new UTF8Encoding(true).GetBytes(JsonConvert.SerializeObject(this, new JsonSerializerSettings { PreserveReferencesHandling = PreserveReferencesHandling.Objects }));
-                // Add some information to the file.
-                fs.Write(info, 0, info.Length);
-            }
+            //if (File.Exists(path))
+            //{
+            //    File.Delete(path);
+            //}
+            //using (FileStream fs = File.Create(path))
+            //{
+            //    Byte[] info = new UTF8Encoding(true).GetBytes(JsonConvert.SerializeObject(this, new JsonSerializerSettings { PreserveReferencesHandling = PreserveReferencesHandling.Objects }));
+            //    // Add some information to the file.
+            //    fs.Write(info, 0, info.Length);
+            //}
         }
 
         /// <summary>
@@ -98,12 +93,13 @@ namespace NeuralNetwork
         /// <returns></returns>
         public static NeuralNetwork Load(string path)
         {
-            using (StreamReader r = new StreamReader(path))
-            {
-                string json = r.ReadToEnd();
-                NeuralNetwork value = JsonConvert.DeserializeObject<NeuralNetwork>(json);
-                return value;
-            }
+            //using (StreamReader r = new StreamReader(path))
+            //{
+            //    string json = r.ReadToEnd();
+            //    NeuralNetwork value = JsonConvert.DeserializeObject<NeuralNetwork>(json);
+            //    return value;
+            //}
+            return null;
         }
     }
 }

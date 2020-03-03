@@ -1,15 +1,14 @@
-﻿using NeuralNetwork.Neurons;
+﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace NeuralNetwork.Tests
+namespace Artififical_Neural_NetworkTests.Neural_Network
 {
     [TestClass]
-    public class DenseNeuronTests
+    public class NeuronTests
     {
         [TestMethod]
-        public void FeedforwardTest()
+        public void TestMethod1()
         {
-            //NeuralNetwork network = new NeuralNetwork(new )
         }
     }
 }

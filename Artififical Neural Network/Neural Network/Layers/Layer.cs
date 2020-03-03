@@ -1,5 +1,4 @@
-﻿using Newtonsoft.Json;
-using NeuralNetwork.Neurons;
+﻿using NeuralNetwork.Neurons;
 
 namespace NeuralNetwork.Layers
 {
@@ -13,12 +12,6 @@ namespace NeuralNetwork.Layers
         protected Layer() { }
 
         #region Initialization
-        [JsonConstructor()]
-        public Layer(BaseNeuron[] neurons)
-        {
-            Neurons = neurons;
-        }
-
         /// <summary>
         /// Generate weights for this layer
         /// </summary>

@@ -1,13 +1,16 @@
-﻿using Newtonsoft.Json;
+﻿using System;
 
 namespace NeuralNetwork.Neurons
 {
     /// <summary>
     /// This is the class designed for a basic Neuron. It only holds an activation value.
     /// </summary>
+    [Serializable]
     public abstract class BaseNeuron
     {
-        [JsonIgnore] public double Activation { get; protected set; }
+        [NonSerialized] private double activation;
+
+        public double Activation { get { return activation; } protected set { activation = value; } }
         public Connection[] ForwardConnections { get; protected set; }
         public Connection[] BackwardsConnections { get; protected set; }
 
@@ -25,19 +28,6 @@ namespace NeuralNetwork.Neurons
         /// Empty constructor only for child classes (Activation for certain neurons will be set later)
         /// </summary>
         protected BaseNeuron() { }
-
-        /// <summary>
-        /// Constructor used for json parsing
-        /// </summary>
-        /// <param name="activation"></param>
-        /// <param name="forwardConnections"></param>
-        /// <param name="backwardsConnections"></param>
-        [JsonConstructor]
-        public BaseNeuron(double activation, Connection[] forwardConnections, Connection[] backwardsConnections) : this(activation)
-        {
-            ForwardConnections = forwardConnections;
-            BackwardsConnections = backwardsConnections;
-        }
 
         /// <summary>
         /// Generate the connections for this neuron

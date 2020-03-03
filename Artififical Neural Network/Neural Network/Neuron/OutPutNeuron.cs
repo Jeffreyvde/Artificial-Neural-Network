@@ -1,11 +1,10 @@
 ﻿using System;
-using Newtonsoft.Json;
 
 namespace NeuralNetwork.Neurons
 {
     public class OutPutNeuron : Neuron
     {
-        [JsonIgnore] private double correctOuput = float.MinValue;
+        [NonSerialized]  private double correctOuput = float.MinValue;
 
         /// <summary>
         /// Default constructor
