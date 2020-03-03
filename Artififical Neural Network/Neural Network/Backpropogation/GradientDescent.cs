@@ -4,7 +4,7 @@ namespace NeuralNetwork
 {
     public class GradientDescent
     {
-        private List<GradientDecentValue> steps = new List<GradientDecentValue>();
+        private readonly List<GradientDecentValue> steps = new List<GradientDecentValue>();
 
         /// <summary>
         /// Add a value to gradient decent
@@ -39,7 +39,7 @@ namespace NeuralNetwork
             GradientDescent newDescent = new GradientDescent();
             for (int i = 0; i < a.steps.Count; i++)
             {
-                newDescent.Add(a.steps[i].stepValue + b.steps[i].stepValue, a.steps[i].changedObject);
+                newDescent.Add(a.steps[i].StepValue + b.steps[i].StepValue, a.steps[i].ChangedObject);
             }
 
             return newDescent;
@@ -56,7 +56,7 @@ namespace NeuralNetwork
             for (int i = 0; i < a.steps.Count; i++)
             {
                 GradientDecentValue step = a.steps[i];
-                step.stepValue /= division;
+                step.StepValue /= division;
             }
 
             return a;
@@ -74,7 +74,7 @@ namespace NeuralNetwork
             for (int i = 0; i < a.steps.Count; i++)
             {
                 GradientDecentValue step = a.steps[i];
-                step.stepValue *= times;
+                step.StepValue *= times;
             }
 
             return a;

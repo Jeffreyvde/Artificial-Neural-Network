@@ -3,7 +3,7 @@ using System.IO;
 using System.Text;
 using Newtonsoft.Json;
 using NeuralNetwork.Layers;
-using NeuralNetwork.Neurons;
+using NeuralNetwork.Utilities;
 using System.Collections.Generic;
 
 namespace NeuralNetwork
