@@ -1,4 +1,6 @@
-﻿namespace NeuralNetwork.Neurons
+﻿using NeuralNetwork.Backpropogation;
+
+namespace NeuralNetwork.Neurons
 {
     public class Connection
     {

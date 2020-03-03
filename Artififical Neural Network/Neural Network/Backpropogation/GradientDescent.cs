@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace NeuralNetwork
+namespace NeuralNetwork.Backpropogation
 {
     public class GradientDescent
     {

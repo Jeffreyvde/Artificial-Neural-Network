@@ -1,7 +1,7 @@
 ﻿using MathNet.Numerics.LinearAlgebra;
 using System;
 
-namespace NeuralNetwork
+namespace NeuralNetwork.Activations
 {
     public class Sigmoid : IActivation
     {

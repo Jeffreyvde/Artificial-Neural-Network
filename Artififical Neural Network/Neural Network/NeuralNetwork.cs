@@ -1,8 +1,10 @@
 ﻿using NeuralNetwork.Layers;
 using System.Collections.Generic;
+using NeuralNetwork.Backpropogation;
 
 namespace NeuralNetwork
 {
+    [System.Serializable]
     public class NeuralNetwork
     {
         public InputLayer Input { get; private set; }
@@ -74,6 +76,9 @@ namespace NeuralNetwork
         /// <param name="path"></param>
         public void Save(string path)
         {
+
+
+
             //if (File.Exists(path))
             //{
             //    File.Delete(path);

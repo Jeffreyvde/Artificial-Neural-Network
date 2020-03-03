@@ -1,4 +1,4 @@
-﻿namespace NeuralNetwork
+﻿namespace NeuralNetwork.Backpropogation
 {
     public class GradientDecentValue
     {

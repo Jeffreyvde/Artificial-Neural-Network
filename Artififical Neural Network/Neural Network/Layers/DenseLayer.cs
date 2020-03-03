@@ -1,5 +1,5 @@
 ﻿using NeuralNetwork.Neurons;
-using NeuralNetwork.Utilities;
+using NeuralNetwork.Activations;
 
 namespace NeuralNetwork.Layers
 {

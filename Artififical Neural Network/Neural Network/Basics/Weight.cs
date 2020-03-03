@@ -1,7 +1,7 @@
-﻿using NeuralNetwork.Neurons;
+﻿using NeuralNetwork.Backpropogation;
 using NeuralNetwork.Utilities;
 
-namespace NeuralNetwork
+namespace NeuralNetwork.Neurons
 {
     public class Weight : IBackpropogatable
     {

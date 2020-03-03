@@ -2,6 +2,7 @@
 
 namespace NeuralNetwork.Layers
 {
+    [System.Serializable]
     public abstract class Layer
     {
         public BaseNeuron[] Neurons { get; protected set; }

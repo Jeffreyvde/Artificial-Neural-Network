@@ -1,4 +1,7 @@
-﻿namespace NeuralNetwork.Neurons
+﻿using NeuralNetwork.Activations;
+using NeuralNetwork.Backpropogation;
+
+namespace NeuralNetwork.Neurons
 {
     public class HiddenNeuron : Neuron
     {

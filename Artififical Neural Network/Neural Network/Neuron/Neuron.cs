@@ -1,4 +1,6 @@
 ﻿using NeuralNetwork.Utilities;
+using NeuralNetwork.Backpropogation;
+using NeuralNetwork.Activations;
 
 namespace NeuralNetwork.Neurons
 {

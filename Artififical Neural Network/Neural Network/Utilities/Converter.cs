@@ -2,7 +2,7 @@
 using MathNet.Numerics.LinearAlgebra.Double;
 using NeuralNetwork.Neurons;
 
-namespace NeuralNetwork
+namespace NeuralNetwork.Utilities
 {
     public static class Converter
     {
