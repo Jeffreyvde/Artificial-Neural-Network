@@ -2,9 +2,9 @@
 {
     public class GradientDecentValue
     {
-        private double stepValue;
+        public double StepValue { get; set; }
 
-        private IBackpropogatable changedObject;
+        public IBackpropogatable ChangedObject { get; private set; }
 
         /// <summary>
         /// Create gradient descent value
@@ -13,8 +13,8 @@
         /// <param name="changedObject"></param>
         public GradientDecentValue(double stepValue, IBackpropogatable changedObject)
         {
-            this.stepValue = stepValue;
-            this.changedObject = changedObject;
+            this.StepValue = stepValue;
+            this.ChangedObject = changedObject;
         }
 
         /// <summary>
@@ -23,7 +23,7 @@
         /// <param name="learningRate"></param>
         public void Apply(double learningRate)
         {
-            changedObject.ApplyGradientDecentStep(stepValue, learningRate);
+            ChangedObject.ApplyGradientDecentStep(StepValue, learningRate);
         }
     }
 }
