@@ -1,27 +1,29 @@
 ﻿namespace NeuralNetwork.Layers
 {
+    [System.Serializable]
     public class Input2DLayer : InputLayer
     {
-        private readonly int length, width;
+        private readonly uint length, width;
 
         /// <summary>
         /// Constructor for the 2D Input layer class
         /// </summary>
-        /// <param name="length"></param>
-        /// <param name="width"></param>
-        public Input2DLayer(int length, int width) : base(length * width)
+        /// <param name="length">Length of the layer</param>
+        /// <param name="width">Width of the layer</param>
+        public Input2DLayer(uint length, uint width) : base(length * width)
         {
             this.length = length;
             this.width = width;
         }
-        
+
         /// <summary>
         /// Set the input layers activations
         /// </summary>
-        /// <param name="input"></param>
+        /// <param name="input">Make sure that this value is the same length and width</param>
         public void SetInput(double[,] input)
         {
-            if (input == null) throw new System.NullReferenceException("Startdata can not be null: please check 2D Input layer's SetInput function");
+            if (input == null) 
+                throw new System.ArgumentNullException(nameof(input));
 
             double[] startData = new double[input.Length];
             for (int i = 0; i < length; i++)

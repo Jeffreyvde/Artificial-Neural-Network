@@ -78,7 +78,9 @@
     <Compile Include="Neural Network\NeuralNetwork.cs" />
     <Compile Include="Neural Network\Basics\Weight.cs" />
     <Compile Include="Neural Network\Activation\Sigmoid.cs" />
-    <Compile Include="Neural Network\Utilities\Randomizer.cs" />
+    <Compile Include="Neural Network\Utilities\IOFile.cs" />
+    <Compile Include="Neural Network\Utilities\Random\IRandom.cs" />
+    <Compile Include="Neural Network\Utilities\Random\RandomRange.cs" />
     <Compile Include="Neural Network\Training\TrainingData.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -98,6 +100,7 @@
     <Analyzer Include="..\packages\Microsoft.NetFramework.Analyzers.2.9.8\analyzers\dotnet\cs\Microsoft.NetFramework.Analyzers.dll" />
     <Analyzer Include="..\packages\Microsoft.NetFramework.Analyzers.2.9.8\analyzers\dotnet\cs\Microsoft.NetFramework.CSharp.Analyzers.dll" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>

@@ -1,4 +1,5 @@
-﻿using NeuralNetwork.Layers;
+﻿using NeuralNetwork.Activations;
+using NeuralNetwork.Layers;
 
 namespace NeuralNetwork
 {
@@ -6,10 +7,9 @@ namespace NeuralNetwork
     {
         static void Main()
         {
-            Sigmoid value = new Sigmoid();
-            NeuralNetwork netowrk = new NeuralNetwork(new InputLayer(1), new OutputLayer(1,value));
 
 
+        
 
         }
 

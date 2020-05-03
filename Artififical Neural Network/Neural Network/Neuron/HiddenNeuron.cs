@@ -1,8 +1,11 @@
-﻿using NeuralNetwork.Activations;
+﻿using System;
+using NeuralNetwork.Activations;
 using NeuralNetwork.Backpropogation;
+using NeuralNetwork.Utilities;
 
 namespace NeuralNetwork.Neurons
 {
+    [Serializable]
     public class HiddenNeuron : Neuron
     {
         /// <summary>
@@ -12,19 +15,28 @@ namespace NeuralNetwork.Neurons
         public HiddenNeuron(IActivation activationFunction) : base(activationFunction) { }
 
         /// <summary>
-        /// Backpropogate this hidden neuron
+        /// Constructor with random is injected
         /// </summary>
-        /// <param name="nextLayer"></param>
-        public override void BackPropogate(GradientDescent descent)
+        /// <param name="random">The random class to be used</param>
+        /// <param name="activationFunction">The activation function to be used</param>
+        public HiddenNeuron(IRandom random, IActivation activationFunction) : base(random, activationFunction) { }
+
+        /// <summary>
+        /// Back propagate this hidden neuron
+        /// </summary>
+        /// <param name="descent"></param>
+        public override void BackPropagate(GradientDescent descent)
         {
-            Neuron nextNeuron;
+            if(descent == null)
+                throw new ArgumentNullException(nameof(descent));
+
             for (int i = 0; i < ForwardConnections.Length; i++)
             {
-                nextNeuron = (Neuron)ForwardConnections[i].EndNeuron;
+                Neuron nextNeuron = (Neuron)ForwardConnections[i].EndNeuron;
                 DerivativeCost += ForwardConnections[i].Weight * nextNeuron.DerivativeActivation * nextNeuron.DerivativeActivation;
             }
             DerivativeCost /= ForwardConnections.Length;
-            base.BackPropogate(descent);
+            base.BackPropagate(descent);
 
             descent.Add(DerivativeActivation * DerivativeCost, this);
         }

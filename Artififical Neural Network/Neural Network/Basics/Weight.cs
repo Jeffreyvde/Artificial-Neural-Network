@@ -1,27 +1,43 @@
-﻿using NeuralNetwork.Backpropogation;
+﻿using System;
+using NeuralNetwork.Backpropogation;
 using NeuralNetwork.Utilities;
 
 namespace NeuralNetwork.Neurons
 {
+    [Serializable]
     public class Weight : IBackpropogatable
     {
-        public double weight { get; private set; }
+        public double Value { get; private set; }
 
         /// <summary>
-        /// Constructor for Weight class. That generates random weight between -1 and 1.
+        /// Constructor for Weight class. That generates random Value between -1 and 1.
         /// </summary>
-        /// <param name="layerIndex"></param>
-        public Weight()
+        public Weight() : this(new RandomRange())
         {
-            weight = Random.Range(-1, 1);
         }
 
         /// <summary>
-        /// Back propogate the weight
+        /// Constructor for Weight class. That generates random Value between -1 and 1.
+        /// </summary>
+        /// <param name="random">Random value to be used for testing</param>
+        public Weight(IRandom random)
+        {
+            if (random == null)
+                throw new ArgumentNullException(nameof(random));
+            Value = random.Range(-1, 1);
+        }
+
+        /// <summary>
+        /// Back propogate the Value
         /// </summary>
         /// <returns></returns>
-        public void BackPropogate(Connection connection, GradientDescent gradient)
+        public void BackPropagate(Connection connection, GradientDescent gradient)
         {
+            if(gradient == null)
+                throw new ArgumentNullException(nameof(gradient));
+            if(connection == null)
+                throw new ArgumentNullException(nameof(connection));
+
             double value = connection.StartNeuron.Activation * ((Neuron)connection.EndNeuron).DerivativeActivation * ((Neuron)connection.EndNeuron).DerivativeCost;
             gradient.Add(value, this);
         }
@@ -29,10 +45,11 @@ namespace NeuralNetwork.Neurons
         /// <summary>
         /// Apply the gradient decent step
         /// </summary>
-        /// <param name="steo"></param>
+        /// <param name="step">The step that needs to be applied</param>
+        /// <param name="learningRate">The learning rate that needs to be applied</param>
         public void ApplyGradientDecentStep(double step, double learningRate)
         {
-            weight -= learningRate * step;
+            Value -= learningRate * step;
         }
 
     }

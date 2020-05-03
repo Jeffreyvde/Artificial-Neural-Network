@@ -7,14 +7,17 @@ namespace NeuralNetwork.Utilities
     public static class Converter
     {
         /// <summary>
-        /// Convert an array of weights to a Matrix<double>
+        /// Convert an array of weights to a Matrix
         /// </summary>
-        /// <param name="weights"></param>
-        /// <param name="rows"></param>
-        /// <param name="layers"></param>
+        /// <param name="neurons"></param>
         /// <returns></returns>
         public static Vector<double> GetWeights(Connection[] neurons)
         {
+            if (neurons is null)
+            {
+                throw new System.ArgumentNullException(nameof(neurons));
+            }
+
             Vector<double> values = Vector<double>.Build.Dense(neurons.Length);
             for (int i = 0; i < neurons.Length; i++)
             {
@@ -24,14 +27,17 @@ namespace NeuralNetwork.Utilities
         }
 
         /// <summary>
-        /// Convert an array of neurons to a Vector<double>
+        /// Convert an array of neurons to a Vector
         /// </summary>
-        /// <param name="weights"></param>
-        /// <param name="rows"></param>
-        /// <param name="layers"></param>
+        /// <param name="neurons"></param>
         /// <returns></returns>
         public static Vector<double> GetStartActivations(Connection[] neurons)
         {
+            if (neurons is null)
+            {
+                throw new System.ArgumentNullException(nameof(neurons));
+            }
+
             Vector<double> values = Vector<double>.Build.Dense(neurons.Length);
             for (int i = 0; i < neurons.Length; i++)
             {

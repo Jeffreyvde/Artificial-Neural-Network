@@ -1,5 +1,6 @@
 ﻿using System;
 using NeuralNetwork.Backpropogation;
+using NeuralNetwork.Utilities;
 
 namespace NeuralNetwork.Neurons
 {
@@ -11,7 +12,7 @@ namespace NeuralNetwork.Neurons
     {
         [NonSerialized] private double activation;
 
-        public double Activation { get { return activation; } protected set { activation = value; } }
+        public double Activation { get => activation; protected set => activation = value; }
         public Connection[] ForwardConnections { get; protected set; }
         public Connection[] BackwardsConnections { get; protected set; }
 
@@ -19,7 +20,7 @@ namespace NeuralNetwork.Neurons
         /// Constructor for the base neuron
         /// </summary>
         /// <param name="activation"></param>
-        public BaseNeuron(double activation)
+        protected BaseNeuron(double activation)
         {
             Activation = activation;
         }
@@ -33,43 +34,61 @@ namespace NeuralNetwork.Neurons
         /// <summary>
         /// Generate the connections for this neuron
         /// </summary>
-        /// <param name="nextlayer"></param>
-        /// <param name="previousLayer"></param>
-        public void EstablishConnections(BaseNeuron[] nextlayer, BaseNeuron[] previousLayer)
+        /// <param name="nextLayer">The next layer in the neural network(Value can be null if they don't exist)</param>
+        /// <param name="previousLayer">The previous layer in the neural network(Value can be null if they don't exist)</param>
+        public void EstablishConnections(BaseNeuron[] nextLayer, BaseNeuron[] previousLayer)
         {
-            if (nextlayer == null) ForwardConnections = null;
+            EstablishConnections(new RandomRange(), nextLayer, previousLayer);
+        }
+
+        /// <summary>
+        /// Generate the connections for this neuron
+        /// </summary>
+        /// <param name="random">The random value you want to use</param>
+        /// <param name="nextLayer">The next layer in the neural network(Value can be null if they don't exist)</param>
+        /// <param name="previousLayer">The previous layer in the neural network(Value can be null if they don't exist)</param>
+        public void EstablishConnections(IRandom random, BaseNeuron[] nextLayer, BaseNeuron[] previousLayer)
+        {
+            if (random is null)
+            {
+                throw new ArgumentNullException(nameof(random));
+            }
+
+            if (nextLayer == null) 
+                ForwardConnections = null;
             else
             {
-                ForwardConnections = new Connection[nextlayer.Length];
-                for (int i = 0; i < nextlayer.Length; i++)
+                ForwardConnections = new Connection[nextLayer.Length];
+                for (int i = 0; i < nextLayer.Length; i++)
                 {
-                    ForwardConnections[i] = new Connection(this, nextlayer[i]);
+                    ForwardConnections[i] = new Connection(this, nextLayer[i], random);
                 }
             }
-            if (previousLayer == null) BackwardsConnections = null;
+            if (previousLayer == null) 
+                BackwardsConnections = null;
             else
             {
                 BackwardsConnections = new Connection[previousLayer.Length];
                 for (int i = 0; i < BackwardsConnections.Length; i++)
                 {
-                    BackwardsConnections[i] = new Connection(previousLayer[i], this);
+                    BackwardsConnections[i] = new Connection(this, previousLayer[i], random);
                 }
             }
         }
 
         /// <summary>
-        /// Feedforward the Neuron
+        /// Feed forward the Neuron
         /// </summary>
         public abstract void FeedForward();
 
         /// <summary>
-        /// Backpropogate the Neuron
+        /// Back propagate the Neuron
         /// </summary>
-        public virtual void BackPropogate(GradientDescent descent)
+        public virtual void BackPropagate(GradientDescent descent)
         {
             for (int i = 0; i < ForwardConnections.Length; i++)
             {
-                ForwardConnections[i].BackPropogate(descent);
+                ForwardConnections[i].BackPropagate(descent);
             }
         }
     }

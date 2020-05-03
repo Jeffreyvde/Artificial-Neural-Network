@@ -1,4 +1,6 @@
-﻿using NeuralNetwork.Neurons;
+﻿using System.Collections.Generic;
+using System.Linq;
+using NeuralNetwork.Neurons;
 using NeuralNetwork.Backpropogation;
 
 namespace NeuralNetwork.Layers
@@ -31,7 +33,6 @@ namespace NeuralNetwork.Layers
         /// <summary>
         /// Train this layer
         /// </summary>
-        /// <param name="previousNeurons"></param>
         public void FeedForward()
         {
             for (int i = 0; i < Neurons.Length; i++)
@@ -44,14 +45,14 @@ namespace NeuralNetwork.Layers
         #region Backpropogation
 
         /// <summary>
-        /// Backpropogate this output layer
+        /// BackPropagate this layer
         /// </summary>
         /// <param name="correctOutputNeuron"></param>
-        public void BackPropogate(GradientDescent gradient)
+        public void BackPropagate(GradientDescent gradient)
         {
             for (int i = 0; i < Neurons.Length; i++)
             {
-                Neurons[i].BackPropogate(gradient);
+                Neurons[i].BackPropagate(gradient);
             }
         }
         #endregion

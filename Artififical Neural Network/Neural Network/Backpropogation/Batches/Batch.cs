@@ -14,7 +14,7 @@
 //            data = new TrainingData[size];
 //            for (int i = 0; i < size; i++)
 //            {
-//                data[i] = allData[Randomizer.random.Next(0, allData.Length)];
+//                data[i] = allData[RandomRange.random.Next(0, allData.Length)];
 //            }
 
 //        }
@@ -26,13 +26,13 @@
 //        public void Run(NeuralNetwork network, double learningRate)
 //        {
 //            network.FeedForward(data[0]);
-//            GradientDescent gradientDescent = network.Backpropogate(data[0]);
+//            GradientDescent gradientDescent = network.Backpropagate(data[0]);
 
 //            for (int i = 1; i < data.Length; i++)
 //            {
 //                TrainingData training = data[i];
 //                network.FeedForward(training);
-//                gradientDescent += network.Backpropogate(training);
+//                gradientDescent += network.Backpropagate(training);
 //            }
 //            gradientDescent /= data.Length - 1;
 //            gradientDescent.Apply(learningRate / data[0].inputData.Length);

@@ -1,5 +1,8 @@
-﻿namespace NeuralNetwork.Neurons
+﻿using System;
+
+namespace NeuralNetwork.Neurons
 {
+    [Serializable]
     public class InputNeuron : BaseNeuron
     {
         public InputNeuron(double activation) : base(activation){}
@@ -19,7 +22,7 @@
         /// </summary>
         public override void FeedForward()
         {
-            throw new System.NotImplementedException("The input layer can not be Feedforwarded.");
+            throw new System.NotImplementedException("The input layer can not be feed forwarded.");
         }
     }
 }
