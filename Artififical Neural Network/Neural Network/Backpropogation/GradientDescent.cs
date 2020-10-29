@@ -1,13 +1,14 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
-namespace NeuralNetworks
+namespace NeuralNetwork.Backpropogation
 {
     public class GradientDescent
     {
-        private List<GradientDecentValue> steps = new List<GradientDecentValue>();
+        private readonly List<GradientDecentValue> steps = new List<GradientDecentValue>();
 
         /// <summary>
-        /// Add a value to gradient decent
+        /// Add gradient value to gradient decent
         /// </summary>
         public void Add(double step, IBackpropogatable backpropogatable)
         {
@@ -31,15 +32,20 @@ namespace NeuralNetworks
         /// <summary>
         /// + operator for gradient descents
         /// </summary>
-        /// <param name="a"></param>
-        /// <param name="b"></param>
+        /// <param name="gradient"></param>
+        /// <param name="other"></param>
         /// <returns></returns>
-        public static GradientDescent operator +(GradientDescent a, GradientDescent b)
+        public static GradientDescent operator +(GradientDescent gradient, GradientDescent other)
         {
+            if (gradient == null)
+                throw new ArgumentNullException(nameof(gradient));
+            if (other == null)
+                throw new ArgumentNullException(nameof(other));
+
             GradientDescent newDescent = new GradientDescent();
-            for (int i = 0; i < a.steps.Count; i++)
+            for (int i = 0; i < gradient.steps.Count; i++)
             {
-                newDescent.Add(a.steps[i].stepValue + b.steps[i].stepValue, a.steps[i].changedObject);
+                newDescent.Add(gradient.steps[i].StepValue + other.steps[i].StepValue, gradient.steps[i].ChangedObject);
             }
 
             return newDescent;
@@ -48,36 +54,41 @@ namespace NeuralNetworks
         /// <summary>
         /// Gradient descent divide
         /// </summary>
-        /// <param name="a"></param>
-        /// <param name="division"></param>
+        /// <param name="gradient"></param>
+        /// <param name="division">The amount you want to divide it by</param>
         /// <returns></returns>
-        public static GradientDescent operator /(GradientDescent a, int division)
+        public static GradientDescent operator /(GradientDescent gradient, int division)
         {
-            for (int i = 0; i < a.steps.Count; i++)
+            if (gradient == null)
+                throw new ArgumentNullException(nameof(gradient));
+
+            for (int i = 0; i < gradient.steps.Count; i++)
             {
-                GradientDecentValue step = a.steps[i];
-                step.stepValue /= division;
+                GradientDecentValue step = gradient.steps[i];
+                step.StepValue /= division;
             }
 
-            return a;
+            return gradient;
         }
 
 
         /// <summary>
         /// Gradient descent *
         /// </summary>
-        /// <param name="a"></param>
-        /// <param name="times"></param>
+        /// <param name="gradient">The gradient value to be multiplied with</param>
+        /// <param name="times">The amount you want to multiply it with</param>
         /// <returns></returns>
-        public static GradientDescent operator *(GradientDescent a, float times)
+        public static GradientDescent operator *(GradientDescent gradient, float times)
         {
-            for (int i = 0; i < a.steps.Count; i++)
+            if (gradient == null)
+                throw new ArgumentNullException(nameof(gradient));
+
+            for (int i = 0; i < gradient.steps.Count; i++)
             {
-                GradientDecentValue step = a.steps[i];
-                step.stepValue *= times;
+                gradient.steps[i].StepValue *= times;
             }
 
-            return a;
+            return gradient;
         }
         #endregion
 

@@ -1,51 +1,55 @@
-﻿using Newtonsoft.Json;
+﻿using System;
+using NeuralNetwork.Backpropogation;
+using NeuralNetwork.Utilities;
 
-namespace NeuralNetworks
+namespace NeuralNetwork.Neurons
 {
+    [Serializable]
     public class Weight : IBackpropogatable
     {
-        public readonly int layerIndex;
-        public double weight;
-
-        public Connection connection;
+        public double Value { get; private set; }
 
         /// <summary>
-        /// Constructor for Weight class. That generates random weight between -1 and 1.
+        /// Constructor for Weight class. That generates random Value between -1 and 1.
         /// </summary>
-        /// <param name="layerIndex"></param>
-        public Weight(int layerIndex, Neuron startNeuron, Neuron endNeuron)
+        public Weight() : this(new RandomRange())
         {
-            this.layerIndex = layerIndex;
-
-            weight = Randomizer.Range(-1, 1);
-            connection = new Connection(startNeuron, endNeuron);
-        }
-
-        [JsonConstructor]
-        public Weight(int layerIndex, Connection connection, double weight)
-        {
-            this.layerIndex = layerIndex;
-            this.weight = weight;
-            this.connection = connection;
         }
 
         /// <summary>
-        /// Back propogate the weight
+        /// Constructor for Weight class. That generates random Value between -1 and 1.
+        /// </summary>
+        /// <param name="random">Random value to be used for testing</param>
+        public Weight(IRandom random)
+        {
+            if (random == null)
+                throw new ArgumentNullException(nameof(random));
+            Value = random.Range(-1, 1);
+        }
+
+        /// <summary>
+        /// Back propogate the Value
         /// </summary>
         /// <returns></returns>
-        public void BackPropogate(GradientDescent gradient)
+        public void BackPropagate(Connection connection, GradientDescent gradient)
         {
-            double value = connection.startNeuron.activation * connection.endNeuron.derivativeActivation * connection.endNeuron.derivativeCost;
+            if(gradient == null)
+                throw new ArgumentNullException(nameof(gradient));
+            if(connection == null)
+                throw new ArgumentNullException(nameof(connection));
+
+            double value = connection.StartNeuron.Activation * ((Neuron)connection.EndNeuron).DerivativeActivation * ((Neuron)connection.EndNeuron).DerivativeCost;
             gradient.Add(value, this);
         }
-        
+
         /// <summary>
         /// Apply the gradient decent step
         /// </summary>
-        /// <param name="steo"></param>
+        /// <param name="step">The step that needs to be applied</param>
+        /// <param name="learningRate">The learning rate that needs to be applied</param>
         public void ApplyGradientDecentStep(double step, double learningRate)
         {
-            weight -= learningRate * step;
+            Value -= learningRate * step;
         }
 
     }

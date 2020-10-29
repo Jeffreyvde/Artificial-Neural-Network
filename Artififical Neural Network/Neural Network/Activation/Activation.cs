@@ -1,6 +1,6 @@
 ﻿using MathNet.Numerics.LinearAlgebra;
 
-namespace NeuralNetworks
+namespace NeuralNetwork.Activations
 {
     public interface IActivation
     {
@@ -10,14 +10,6 @@ namespace NeuralNetworks
         /// <param name="value"></param>
         /// <returns></returns>
         double CalculateActivation(double value);
-
-        /// <summary>
-        /// Calculate the activation function for an entire vector
-        /// </summary>
-        /// <param name="value">Vector</param>
-        /// <returns></returns>
-        Vector<double> CalculateActivation(Vector<double> value);
-
 
         /// <summary>
         /// Calculate the derivative of the activation
