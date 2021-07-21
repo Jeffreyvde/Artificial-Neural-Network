@@ -1,155 +1,73 @@
-﻿using System;
-using System.IO;
-using System.Text;
-using Newtonsoft.Json;
+﻿using NeuralNetwork.Layers;
+using System.Collections.Generic;
+using NeuralNetwork.Backpropogation;
+using System;
 
-namespace NeuralNetworks
+namespace NeuralNetwork.Basics
 {
-    public struct NeuralNetwork
+    [System.Serializable]
+    public class NeuralNetwork
     {
-        public Layer[] layers;
-        public static IActivation activation;
+        public InputLayer Input { get; private set; }
+        public OutputLayer Output { get; private set; }
+
+        private readonly Layer[] hiddenLayers;
+        public IEnumerable<Layer> HiddenLayers => hiddenLayers;
 
         /// <summary>
-        /// Create a neural network structure. The size include the input and output layers.
+        /// Constructor for the Neural Network
         /// </summary>
-        /// <param name="layerSizes">sizes of each layer</param>
-        public NeuralNetwork(IActivation activation, params int[] layerSizes)
+        public NeuralNetwork(InputLayer input, OutputLayer output, params Layer[] hidden)
         {
-            if (layerSizes.Length <= 2) throw new System.Exception("Neural network can not be smaller than 3 layers.");
+            Input = input ?? throw new ArgumentNullException(nameof(input));
+            Output = output ?? throw new ArgumentNullException(nameof(output));
+            hiddenLayers = hidden ?? throw new ArgumentNullException(nameof(hidden));
 
-            NeuralNetwork.activation = activation;
-
-            layers = new Layer[layerSizes.Length];
-
-            CreateNewLayer(0, layerSizes[0], null);
-
-            for (int i = 1; i < layerSizes.Length; i++)
+            List<Layer> layers = new List<Layer>()
             {
-                CreateNewLayer(i, layerSizes[i], layers[i - 1].neurons);
+                input
+            };
+            layers.AddRange(hidden);
+            layers.Add(output);
+            for (int i = 0; i < layers.Count - 1; i++)
+            {
+                if (i == 0)
+                    layers[i].ConnectNeurons(layers[i + 1].Neurons, null);
+                else if (i == layers.Count - 1)
+                    layers[i].ConnectNeurons(null, layers[i - 1].Neurons);
+                else
+                    layers[i].ConnectNeurons(layers[i - 1].Neurons, layers[i + 1].Neurons);
             }
-        }
-
-        [JsonConstructor()]
-        public NeuralNetwork(Layer[] layers)
-        {
-            this.layers = layers;
         }
 
         /// <summary>
         /// Train the neural network
         /// </summary>
-        public void FeedForward(TrainingData trainingData)
+        public void FeedForward(double[] trainingData)
         {
-            SetInputLayer(trainingData.inputData);
-
-            for (int i = 1; i < layers.Length; i++)
+            Input.SetInput(trainingData);
+            for (int i = 1; i < hiddenLayers.Length; i++)
             {
-                layers[i].FeedForward(layers[i - 1].neurons);
+                hiddenLayers[i].FeedForward();
             }
+            Output.FeedForward();
         }
 
         /// <summary>
-        /// Backpropogate neural network
+        /// Back propagate neural network
         /// </summary>
-        /// <param name="trainingData"></param>
-        public GradientDescent Backpropogate(TrainingData trainingData)
+        /// <param name="correctOutput">The expected output</param>
+        public GradientDescent BackPropagate(double[] correctOutput)
         {
             GradientDescent gradient = new GradientDescent();
-            layers[layers.Length - 1].BackPropogate(trainingData.correctOutputNeuron, gradient);
-
-            for (int i = layers.Length - 2; i > 0; i--)
+            Output.SetOutput(correctOutput);
+            Output.BackPropagate(gradient);
+            for (int i = hiddenLayers.Length; i > 0; i--)
             {
-                layers[i].BackPropogate(layers[i + 1], gradient);
+                hiddenLayers[i].BackPropagate(gradient);
             }
+            Input.BackPropagate(gradient);
             return gradient;
-        }
-
-        /// <summary>
-        /// Create a new layer in the neural network
-        /// </summary>
-        /// <param name="index">What is the index of this new layer</param>
-        /// <param name="size">What is the size of this new layer</param>
-        /// <param name="random">Random as optimilization</param>
-        /// <param name="previousNeurons">Optional previous neurons</param>
-        private void CreateNewLayer(int index, int size, Neuron[] previousNeurons)
-        {
-            Layer layer = new Layer(index, size);
-            layers[index] = layer;
-            if (previousNeurons != null)
-                layer.GenerateWeights(previousNeurons);
-        }
-
-        /// <summary>
-        /// Initialize the input layer
-        /// </summary>
-        /// <param name="input"></param>
-        private void SetInputLayer(double[] input)
-        {
-            Layer layer = layers[0];
-
-            if (input.Length != layer.neurons.Length) throw new Exception("Input not equal to neurons lenght");
-
-            for (int i = 0; i < layer.neurons.Length; i++)
-            {
-                layer.neurons[i].activation = input[i];
-            }
-        }
-
-        public double CalculateCost(int correctOuput)
-        {
-            Layer lastLayer = layers[layers.Length - 1];
-
-            double cost = 0;
-            for (int i = 0; i < lastLayer.neurons.Length; i++)
-            {
-                cost += lastLayer.neurons[i].CalculateCost(correctOuput);
-            }
-            return cost / lastLayer.neurons.Length;
-        }
-
-        public bool IsNeuralNetworkCorrect(int correctOutput)
-        {
-            Layer lastLayer = layers[layers.Length - 1];
-
-            int guess = 0;
-            double highestActivation = 0;
-            for (int i = 0; i < lastLayer.neurons.Length; i++)
-            {
-                double activation = lastLayer.neurons[i].activation;
-                if (highestActivation < activation)
-                {
-                    guess = i;
-                    highestActivation = activation;
-                }
-            }
-            return guess == correctOutput;
-        }
-
-
-        public void Save(string path)
-        {
-            if (File.Exists(path))
-            {
-                File.Delete(path);
-            }
-            using (FileStream fs = File.Create(path))
-            {
-                Byte[] info = new UTF8Encoding(true).GetBytes(JsonConvert.SerializeObject(this, new JsonSerializerSettings { PreserveReferencesHandling = PreserveReferencesHandling.Objects }));
-                // Add some information to the file.
-                fs.Write(info, 0, info.Length);
-            }
-        }
-
-        public static NeuralNetwork Load(string path, IActivation activation)
-        {
-            using (StreamReader r = new StreamReader(path))
-            {
-                string json = r.ReadToEnd();
-                NeuralNetwork value = JsonConvert.DeserializeObject<NeuralNetwork>(json);
-                NeuralNetwork.activation = activation;
-                return value;
-            }
         }
     }
 }

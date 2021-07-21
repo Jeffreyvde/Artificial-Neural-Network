@@ -1,43 +1,47 @@
 ﻿using MathNet.Numerics.LinearAlgebra;
 using MathNet.Numerics.LinearAlgebra.Double;
+using NeuralNetwork.Neurons;
 
-namespace NeuralNetworks
+namespace NeuralNetwork.Utilities
 {
     public static class Converter
     {
         /// <summary>
-        /// Convert an array of weights to a Matrix<double>
+        /// Convert an array of weights to a Matrix
         /// </summary>
-        /// <param name="weights"></param>
-        /// <param name="rows"></param>
-        /// <param name="layers"></param>
+        /// <param name="neurons"></param>
         /// <returns></returns>
-        public static Matrix<double> ConvertToMatrix(Weight[,] weights, int rows, int layers)
+        public static Vector<double> GetWeights(Connection[] neurons)
         {
-            double[,] weightValues = new double[rows, layers];
-            for (int i = 0; i < rows; i++)
+            if (neurons is null)
             {
-                for (int j = 0; j < layers; j++)
-                {
-                    weightValues[i, j] = weights[i, j].weight;
-                }
+                throw new System.ArgumentNullException(nameof(neurons));
             }
-            return DenseMatrix.OfArray(weightValues);
-        }
 
-        /// <summary>
-        /// Convert an array of neurons to a Vector<double>
-        /// </summary>
-        /// <param name="weights"></param>
-        /// <param name="rows"></param>
-        /// <param name="layers"></param>
-        /// <returns></returns>
-        public static Vector<double> ConvertToVector(Neuron[] neurons, bool activationVector)
-        {
             Vector<double> values = Vector<double>.Build.Dense(neurons.Length);
             for (int i = 0; i < neurons.Length; i++)
             {
-                values[i] = activationVector ? neurons[i].activation : neurons[i].bias;
+                values[i] = neurons[i].StartNeuron.Activation;
+            }
+            return values;
+        }
+
+        /// <summary>
+        /// Convert an array of neurons to a Vector
+        /// </summary>
+        /// <param name="neurons"></param>
+        /// <returns></returns>
+        public static Vector<double> GetStartActivations(Connection[] neurons)
+        {
+            if (neurons is null)
+            {
+                throw new System.ArgumentNullException(nameof(neurons));
+            }
+
+            Vector<double> values = Vector<double>.Build.Dense(neurons.Length);
+            for (int i = 0; i < neurons.Length; i++)
+            {
+                values[i] = neurons[i].StartNeuron.Activation;
             }
             return values;
         }

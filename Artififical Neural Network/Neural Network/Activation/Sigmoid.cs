@@ -1,7 +1,7 @@
 ﻿using MathNet.Numerics.LinearAlgebra;
 using System;
 
-namespace NeuralNetworks
+namespace NeuralNetwork.Activations
 {
     public class Sigmoid : IActivation
     {
@@ -12,21 +12,9 @@ namespace NeuralNetworks
         /// <returns></returns>
         public double CalculateActivation(double value)
         {
-            double exponant = Math.Exp(value);
-            return exponant / (1.0f + exponant);
+            double exponent = Math.Exp(value);
+            return exponent / (1.0f + exponent);
         }
-
-        /// <summary>
-        /// Calculate the sigmoid function for an entire vector
-        /// </summary>
-        /// <param name="value">Vector</param>
-        /// <returns></returns>
-        public Vector<double> CalculateActivation(Vector<double> value)
-        {
-            Vector<double> exponant = value.PointwiseExp();
-            return exponant / (1.0f + exponant);
-        }
-
 
         /// <summary>
         /// Calculate the derivative of sigmoid
@@ -35,8 +23,8 @@ namespace NeuralNetworks
         /// <returns></returns>
         public double CalculateDerivativeActivation(double value)
         {
-            double derivativeExponant = 1 / (1 + Math.Exp(-value));
-            return derivativeExponant * (1 - derivativeExponant);
+            double derivativeExponent = 1 / (1 + Math.Exp(-value));
+            return derivativeExponent * (1 - derivativeExponent);
         }
     }
 }

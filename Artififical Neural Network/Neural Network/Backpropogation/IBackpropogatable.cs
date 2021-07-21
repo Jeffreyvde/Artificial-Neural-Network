@@ -1,4 +1,4 @@
-﻿namespace NeuralNetworks
+﻿namespace NeuralNetwork.Backpropogation
 {
     public interface IBackpropogatable
     {
